@@ -1,0 +1,293 @@
+/*css reset*/
+body,
+ul,
+ol,
+li,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+form,
+table,
+article,
+figure,
+tr,
+td,
+th,
+img,
+div,
+input,
+label {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-size: 14px;
+    font-family: "Arial", "Microsoft YaHei", "黑体"， "宋体", sans-serif;
+    background:#dedede;
+}
+
+img {
+    border: none;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    width:100%;
+    margin: 0 auto;
+}
+
+/*浮动清除*/
+.clearfix:before,
+.clearfix:after {
+    content: "\200b";
+    display: block;
+    height: 0;
+    clear: both;
+}
+
+/*头部开始*/
+header {
+    background: #333;
+    clear: both;
+}
+
+header img {
+    float: left;
+    margin-left: 40px;
+}
+
+/*导航栏开始*/
+.nav {
+    float: right;
+    height: 60px;
+    line-height: 60px;
+}
+
+.nav ul {
+    margin-right: -20px;
+}
+
+.nav li {
+    float: left;
+}
+
+.nav li a {
+    display: block;
+    color: #fff;
+    margin-right: 20px;
+}
+
+/*文章主体部分开始*/
+article {
+    background-color: #fff;
+    border: 1px solid #CDCDCD;
+    box-shadow: 2px 2px #848484;
+    margin: 20px;
+    padding: 35px 20px; 
+}
+
+article h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+article h3 {
+    font-size: 16px;
+    margin-bottom: 16px;
+    margin-top: 16px;
+    color: #626365;
+}
+
+.time {
+    text-indent: 0em;
+    font-size:14px;
+    color: #626365;
+}
+
+article p {
+    text-indent: 2em;
+    font-size: 16px;
+    line-height: 1.5625;
+    font-weight: 500;
+}
+
+article p a {
+    text-decoration: underline;
+    color: blue;
+}
+
+article ul li {
+    font: -size: 16px;
+    line-height: 1.5625;
+}
+
+/*文本图片部分开始*/
+figure img { 
+    text-align: center;
+    width: 160px;
+    height: 125px;
+   
+}
+
+figure figcaption {
+    text-align: center;
+}
+
+figure {
+    border: 1px solid #CCC;
+    width: 160px;
+    height: 160px;
+    margin: 10px;
+    padding: 10px 10px 0;
+}
+
+/*列表部分开始*/
+ol {
+    padding-left: 40px;
+}
+
+ol li {
+    margin: 8px 0;
+    list-style-type: decimal;
+    font-weight: bold;
+}
+/*表格部分开始*/
+.table {
+    text-indent: 0;
+    font-weight: 700;
+}
+
+table {
+    width : 100%;
+    border : 1px solid #CBCBCB;
+    border-collapse: collaspe;
+}
+
+table thead {
+    background-color: #333;
+    font-weight: 700;
+    color: #fff;
+    text-align: left;
+}
+
+table tr {
+    height: 25px;
+    line-height: 25px;
+}
+
+table td a {
+    text-decoration: underline;
+}
+
+table th,
+table td {
+    border:1px solid #CBCBCB;
+}
+
+table tfoot {
+    font-weight: bold;
+}
+
+/*侧栏开始*/
+aside {
+    background-color: #fff;
+    border: 1px solid #CDCDCD;
+    box-shadow: 2px 2px #848484;
+    margin: 20px;
+    padding: 30px 20px; 
+}
+
+aside h2 {
+    font-size: 16px;
+    padding: 8px;
+    margin-bottom: 20px;
+    border-left: 3px solid #CBCBCB;
+}
+
+/*表单开始*/
+form {
+    padding-left: 23%;
+    font-weight: bold;
+}
+
+.pass input,
+.email input {
+    height: 22px;
+    line-height: 22px;
+    width: 130px;
+    border: 1px solid #CDCDCD;
+}
+
+.pass label,
+.email label,
+.form-options .option-set span,
+.text-area label {
+    display: inline-block;
+    height: 22px;
+    line-height: 22px;
+    width: 120px;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.pass p,
+.email p {
+    margin: 10px 0 20px 135px;
+    color: #ACA9B0;
+}
+
+.pass:first-child {
+    margin-bottom: 10px;
+}
+
+.option-set {
+    margin-bottom: 10px;
+}
+
+.text-area label {
+    float: left;
+}
+
+.option-set input {
+    margin-right: 5px;
+}
+
+.text-area textarea {
+    height: 80px;
+    width: 65%;
+    border: 1px solid #9A9A9A;
+}
+
+button {
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    font-weight: 700;
+    width: 95%;
+    background-color: #3355D0;
+    border: 1px solid #C4CCCF;
+    border-radius: 5px;
+    color: #fff;
+    margin: 0 auto;
+}
+
+/*页脚开始*/
+footer {
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+    height: 60px;
+    line-height: 60px;
+}
