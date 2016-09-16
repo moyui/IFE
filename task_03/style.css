@@ -1,0 +1,80 @@
+body,
+div,
+p,
+img {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    padding: 20px;
+}
+
+.container {
+    overflow: hidden;
+    padding: 20px;
+    background-color: #eee;
+    border: 1px solid #999;
+    margin: 0 auto;
+}
+
+div {
+    padding: 20px;
+    border: 1px solid #999;
+}
+
+img {
+    width :80px;
+    height: 80px;
+    border: 1px solid #999;
+}
+
+p {
+    font-weight: bold;
+}
+
+/*队标开始*/
+.team-logo {
+    float: left;
+    width: 160px;
+    background-color: white;
+}
+
+.team-logo img {
+    float: left;
+    height: 80px;
+    width: 80px;
+}
+
+.team-logo p {
+    margin-left: 100px;
+}
+
+/*主文本开始*/
+.clearfix {
+    padding: 0;
+    border: 0;
+    width: 100%;
+}
+
+.introduction {
+    margin-left: 220px;
+    margin-right: 140px;
+    background-color: white;
+    line-height: 1.6;
+}
+
+/*右侧栏开始*/
+.sidebar {
+    padding: 20px;
+    float: right;
+    width: 80px;
+    background: white;
+    height: 380px;
+}
+
+.sidebar img {
+    margin-bottom: 20px;
+    height: 80px;
+    width: 80px;
+}
