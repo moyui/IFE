@@ -1,0 +1,463 @@
+/*css重置*/
+body,ul,ol,li,p,h1,h2,h3,h4,h5,form,fieldset,table,td,tr,img,div,dl,dt,dd,input,label,figure {
+    margin: 0;
+    padding: 0;
+}
+
+/*统一盒子宽度*/
+*,
+*:after,
+*:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 12px;
+    font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+    margin: 0 auto;
+}
+
+img {
+    border: 0;
+}
+
+.clearfix:before,.clearfix:after {
+    content: "\200b";
+    display: block;
+    height: 0;
+    clear: both;
+}
+/*css重置完成*/
+
+/*整体设置*/
+body {
+    width: 980px;
+    height: 1386px;
+}
+
+.wrap {
+    width: 892px;
+    height: 1386px;
+    margin: 0 auto;
+}
+
+/*整体设置结束*/
+
+/*页头设置*/
+header {
+    border-bottom: 2px solid #938e8c;
+}
+
+.head-logo,
+.head-time {
+    font-family: "黑体";
+    font-size: 12px;
+    line-height: 110px;
+    height: 61px;
+}
+
+.head-logo {
+    display: inline-block;
+    background-color: #d45d5c;
+    color: #ffffff;
+    width: 110px;
+    float: left;
+    text-indent: 0.5em;
+}
+
+.head-time {
+    color: #D45D5C;
+    float: right;
+}
+/*页头结束*/
+
+/*页面侧栏开始*/
+aside {
+    width: 203px;
+    float: right;
+    border-top: 2px solid #cc8091;
+}
+
+.aside-content {
+    margin-bottom: 10px;
+}
+
+.aside-content h2 {    
+    font-family: "Microsoft YaHei";
+    font-size: 18px;
+    color: #000000;
+    font-weight: normal;
+}
+
+.aside-content h2 span {
+    font-size: 24px; 
+}
+
+.aside-content p {
+    font-size: 12px;
+    font-family: "楷体";
+    color: #676767;
+    font-style: italic;
+}
+
+.aside-content .underline {
+    height: 35px;
+    line-height: 40px;
+    display: inline-block;
+    border-bottom: 2px solid #938e8c;
+}
+
+.aside-logo {
+    position: relative;
+}
+
+.aside-logo strong {
+    font-family: "Microsoft YaHei";
+    font-size: 100px;
+    color: #75b86b;
+    font-style: italic;
+}
+
+.aside-logo span {
+    line-height: 10px;
+    font-family: "Microsoft YaHei";
+    color: #cc8091;
+    display: inline-block;
+}
+
+.aside-logo .time {
+    font-size: 55px;
+}
+
+.aside-logo .middle {
+    font-size: 21px;
+    position: absolute;
+}
+
+.aside-logo .small {
+    font-size: 12px;
+}
+/*页面侧栏结束*/
+
+/*左上文本开始*/
+.lt-content {
+    font-size: 12px;
+    width: 641px;
+    margin-top: 40px;
+}
+
+.lt-content .lt-img {
+    position: relative;
+}
+
+.lt-content img {
+    width: 641px;
+    height: 301px;
+}
+
+.lt-img .left {
+    width: 191px;
+    height: 301px;
+    background-color: rgba(160, 197, 172, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.lt-img .right {
+    width: 191px;
+    height: 301px;
+    background-color: rgba(229, 186, 191, 0.5);
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.lt-inner-content {
+    margin-top: 16px;
+    margin-left: -22px;
+    overflow: hidden;
+}
+
+.lt-inner-content .left {
+    float: left;
+    width: 33.33%;
+    padding-left: 22px;
+}
+
+.lt-inner-content .middle {
+    float: left;
+    width: 33.33%;
+    padding-left: 22px;
+}
+
+.lt-inner-content .right {
+    float: right;
+    width: 33.33%;
+    padding-left: 22px;
+}
+
+.lt-inner-content .left h3 {
+    font-size: 16px;
+    font-family: "Microsoft YaHei";
+    font-weight: bold;
+    color: #418c59;
+    text-decoration: underline;
+}
+
+.lt-inner-content .middle h3 {
+    font-size: 16px;
+    font-family: "Microsoft YaHei";
+    font-weight: bold;
+    color: #d2994f;
+    text-decoration: underline;
+}
+
+.lt-inner-content .right h3 {
+    font-size: 16px;
+    font-family: "Microsoft YaHei";
+    font-weight: bold;
+    color: #cc7680;
+    text-decoration: underline;
+}
+
+.lt-inner-content p {
+    margin-top: 10px;
+    font-size: 12px;
+    font-family: "宋体";
+    color: #767777;
+}
+.right-percent  {
+    margin-top: 22px;
+    line-height: 22px;
+}
+
+.right-percent p {
+    font-family: "Microsoft YaHei"
+}
+
+.right-percent .content {
+    font-size: 12px;
+    color: #231815;
+    opacity: 0.7;
+}
+
+.right-percent .percent {
+    font-size: 12px;
+    font-style: italic;
+    color: #cd4a48;
+    opacity: 0.7;
+}
+/*左上文本结束*/
+ 
+/*左下主要文本开始*/
+.lb-main-content {
+    float: left;
+    width: 415px;
+    margin-right: 16px;
+    margin-top: 40px;
+}
+
+.lb-main-content h1 .big {
+    font-size: 72px;
+    font-family: "黑体";
+    font-weight: bold;
+    font-style: italic;
+    color: #f5e327;
+}
+
+.lb-main-content h1 {
+    margin-bottom: 16px;
+    font-size: 42px;
+    font-family: "黑体";
+    font-weight: bold;
+    color: #11456b;
+}
+
+.lb-main-content h2 {
+    font-size: 33px;
+    font-family: "黑体";
+    font-weight: bold;
+    color: #11456b;  
+    border-bottom: 2px solid #11456b;
+    padding-bottom: 16px;
+}
+
+.lb-main-content p .big {
+    margin: 0 5px 5px 0;
+    float: left;
+    font-size: 70px;
+    font-family: "Microsoft YaHei";
+    color: #f5e327;
+}
+
+.lb-main-content p {
+    margin-top: 16px;
+    font-size: 12px;
+    font-family: "宋体";
+    color: #767777;
+}
+
+.lb-main-content img {
+    float: right;
+    margin: 16px 0 10px 16px;
+}
+/*左下主要文本结束*/
+
+/*右下开始*/
+.rb-content {
+    margin-top: 44px;
+    width: 458px;
+    float: right;
+}
+
+.rb-img {
+    width: 458px;    
+    height: 257px;
+    position: relative;    
+}
+
+.rb-img .words {
+    position: absolute;
+    bottom: 2px;
+    height: 61px;
+    width: 458px;
+    line-height: 61px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    font-family: "Microsoft YaHei";
+    font-style: italic;
+    color: #72b16a;
+    background-color: rgba(155, 153, 153, 0.3);
+}
+
+.rb-img .words .title{
+    padding-left: 50px;
+    margin-right: 5px;
+    font-size: 26px;
+    letter-spacing: 2px;
+    font-family: "Microsoft YaHei";
+    font-style: normal;
+    color: #ffffff;
+}
+
+.rb-img .words .block {  
+    position: absolute;
+    bottom: 6.5px;
+    width: 40px;
+    height: 44px;
+    border-right: 3px solid #72b16a;
+}
+
+.rb-main-content {   
+    position: relative;
+    width: 459px;
+    height: 318px;
+    margin-top: 20px;
+    margin-right: 20px;
+    background-color: rgb(238, 237, 214);
+}
+
+.rb-main-big {
+    padding-top: 20px;
+    padding-left: 50px;
+    padding-right: 20px;
+}
+
+.rb-main-big ul {
+    list-style-image: url("li.png");
+}
+
+.rb-main-big li {
+    line-height: 40px;   
+    font-size: 16px;
+    font-family: "宋体";
+}
+
+.rb-main-big li .right-words {
+    float: right;
+    font-size: 12px;
+    font-style: italic;
+}
+
+.rb-main-small {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 260px;
+    height: 160px;
+    background-color: #d45d5c;
+}
+
+.rb-main-small .h2 {
+    float: left;
+    display: inline-block;
+    margin-top: 7.5px;
+    margin-left: 10px;
+    font-size: 110px;
+    color: #ffffff;
+    font-family: "Microsoft YaHei";
+}
+
+.rb-main-small .rb-main-small-content {
+    float: left;
+    display: inline-block;
+    width: 183.5px;
+    height: 86px;
+    border-left: 2px solid #ffffff;
+    margin-top: 40px;
+    margin-left: 1px;
+    padding-left: 8px;
+}
+.rb-main-small-content .big {
+    line-height: 24px;
+    font-size: 21px;
+    font-family: "黑体";
+    color: #ffffff;
+    font-style: italic;
+}
+
+.rb-main-small-content .small {
+    line-height: 6px;
+    font-size: 12px;
+    font-family: "黑体";
+    color: #ffffff;
+}
+
+.rb-main-content .content {
+    padding-top: 20px;
+    padding-left: 20px;
+    margin-left: 211px;
+    float: left;
+    width: 199px;
+}
+
+.rb-main-content .p {
+    font-size: 14px;
+    font-family: "黑体";
+    font-style: italic;
+    line-height: 16px;
+    color: #5a5b5b;
+}
+
+.rb-main-content .strong {
+    font-size: 52px;
+    color: #d45d5c;
+    font-family: "黑体";
+}
+/*右下部分结束*/
+
+/*页尾开始*/
+footer {
+    margin-top: 680px;
+    border-top: 1px solid #938e8c;
+}
+
+footer p {
+    float: right;
+    font-size: 12px;
+    color: #d45d5c;
+    font-family: "黑体";
+}
