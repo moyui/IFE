@@ -1,0 +1,134 @@
+/*css重置*/
+body,html,p,div {
+    margin: 0;
+    padding: 0;
+}
+
+*,*:after,*:before {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+/*css重置完成*/
+
+body {
+    color: red;
+}
+
+.row:after, .row:before {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.content {
+    background-color: #eee;
+    border: 1px solid #999;
+    height: 50px;
+    padding: 5px;
+}
+
+.row [class*=col-] {
+    float: left;
+    min-height: 1px;
+    padding: 20px;
+}
+
+@media (min-width: 769px) {
+    .col-md-12 {
+        width: 100%;
+    }
+
+    .col-md-11 {
+        width: 91.666666667%;
+    }
+
+    .col-md-10 {
+        width: 83.333333333%;
+    }
+
+    .col-md-9 {
+        width: 75%;
+    }
+
+    .col-md-8 {
+        width: 66.666666667%;
+    }
+
+    .col-md-7 {
+        width: 58.333333333%;
+    }
+
+    .col-md-6 {
+        width: 50%;
+    }
+
+    .col-md-5 {
+        width: 41.666666666%;
+    }
+
+    .col-md-4 {
+        width: 33.333333333%;
+    }
+
+    .col-md-3 {
+        width: 25%;
+    }
+
+    .col-md-2 {
+        width: 16.666666667%;
+    }
+
+    .col-md-1 {
+        width: 8.3333333333%;
+    }
+}
+
+@media (max-width: 768px) {
+    .col-xs-12 {
+        width: 100%;
+    }
+
+    .col-xs-11 {
+        width: 91.666666667%;
+    }
+
+    .col-xs-10 {
+        width: 83.333333333%;
+    }
+
+    .col-xs-9 {
+        width: 75%;
+    }
+
+    .col-xs-8 {
+        width: 66.666666667%;
+    }
+
+    .col-xs-7 {
+        width: 58.333333333%;
+    }
+
+    .col-xs-6 {
+        width: 50%;
+    }
+
+    .col-xs-5 {
+        width: 41.666666666%;
+    }
+
+    .col-xs-4 {
+        width: 33.333333333%;
+    }
+
+    .col-xs-3 {
+        width: 25%;
+    }
+
+    .col-xs-2 {
+        width: 16.666666667%;
+    }
+
+    .col-xs-1 {
+        width: 8.3333333333%;
+    }
+}
