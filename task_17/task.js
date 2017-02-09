@@ -156,7 +156,7 @@ function initCitySelector() {
     var cityProcess = city.split("\"")[0];
     var addCity = document.createElement("option");
     addCity.innerHTML = cityProcess;
-    addCity.value = '\"' + cityProcess + '\"';
+    addCity.value = cityProcess;
     citySelectParent.appendChild(addCity); 
   }
   // 给select设置事件，当选项发生变化时调用函数citySelectChange
@@ -169,6 +169,7 @@ function initCitySelector() {
 function initAqiChartData() {
   // 将原始的源数据处理成图表需要的数据格式
   var processData = aqiSourceData[pageState.nowSelectCity];
+
   chartData.weekAqi = {};
   chartData.monthAqi = {};
   chartData.dayAqi = {};
