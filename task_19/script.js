@@ -129,26 +129,7 @@ function randomColor() {
 				liHit.push(li[i].offsetHeight);
 			}
 		})();
-		var inner = function (liHit) {
-			li = document.querySelectorAll("li");
-			if (liHit.length === 0) {
-				return [];
-			}
-			var pivot = liHit[0];
-			var lesser = [];
-			var greater = [];
-			for (var j = 1; j < liHit.length; j++) {
-				if (liHit[j] < pivot) {
-					lesser.push(liHit[j]);
-					list.insertBefore(li[j], li[0]);
-				} else {
-					greater.push(liHit[j]);
-					list.append(liHit[j]);
-				}
-			}
-			return inner(lesser).concat(pivot, inner(greater));
-		};
-		inner(liHit);
+
 	}
 
 })();
