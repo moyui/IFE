@@ -40,7 +40,7 @@ function randomColor() {
 		addEvent(lOut, "click", leftOut);
 		addEvent(rOut, "click", rightOut);
 		addEvent(randomElement, "click", funRandomElement);
-		addEvent(quickSort, "click", funQuickSort);
+		addEvent(quickSort, "click", funBubble);
 	}
 
 	var input = document.getElementById("input");
@@ -90,7 +90,7 @@ function randomColor() {
 	function leftOut() {
 		var firstChild = list.firstElementChild;
 		if (firstChild) {
-			if (confirm("第一个元素为：" + firstChild.offsetHeight + "你确定要删除吗?")) {
+			if (confirm("第一个元素为：" + firstChild.offsetHeight / 4 + "你确定要删除吗?")) {
 				list.removeChild(firstChild);
 			} 
 		} else {
@@ -101,7 +101,7 @@ function randomColor() {
 	function rightOut() {
 		var lastChild = list.lastElementChild;
 		if (lastChild) {
-			if (confirm("最后一个元素为：" + lastChild.offsetHeight + "你确定要删除吗？")) {
+			if (confirm("最后一个元素为：" + lastChild.offsetHeight / 4 + "你确定要删除吗？")) {
 				list.removeChild(lastChild);
 			} 
 		} else {
@@ -121,15 +121,34 @@ function randomColor() {
 		list.appendChild(fragment);
 	}
 
-	function funQuickSort () {
-		var li = document.querySelectorAll("li");
+	function funBubble () {
+		var li = list.querySelectorAll("li");
 		var liHit = [];
 		(function () {
 			for (var i = 0; i < li.length; i++) {
 				liHit.push(li[i].offsetHeight);
 			}
 		})();
-
+		(function () {
+			var temp;
+			var arr = [];
+			var len = liHit.length;
+			for (var i = len -1 ; i >= 0; i--) {
+				for (var j = 0; j < i; j++) {	
+					(function(j) {
+						setTimeout(function() {
+							if (liHit[j] >= liHit[j + 1]) {
+								temp = liHit[j];
+								liHit[j] = liHit[j + 1];
+								liHit[j + 1] = temp;
+								li[j].style.height = liHit[j + 1] + "px";
+								li[j + 1].style.height = temp + "px";
+							}
+						}, 500);
+					})(j);
+				}
+			}
+		})();
 	}
 
 })();
