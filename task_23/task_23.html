@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+	<meta charset="UTF-8">
+	<title>task_23</title>
+	<style>
+		body {
+			text-align: center;
+			font-size: 12px;
+		}
+		div {
+			border: 1px solid gray;
+			padding: 5px;
+			margin: 5px;
+			display: flex;
+            flex-grow: 1;
+		}
+		#tree {
+        	width: 90%;
+        	height: 150px;
+        	margin: 10px auto;
+    	}
+    	button {
+    		text-align: center;
+    		margin: 10px auto;
+    	}
+	</style>
+</head>
+
+<body>
+	<div id="tree">Super
+		<div>Can
+			<div>Apple
+				<div>Pear</div>
+				<div>Pig</div>
+				<div>Cola</div>
+				<div>Soccor</div>
+			</div>
+			<div>Phone</div>
+			<div>
+				<div>Book</div>
+				<div>School</div>
+			</div>
+		</div>
+		<div>Note
+			<div>Human
+				<div>Code</div>
+				<div>Operation</div>
+				<div>Man</div>
+			</div>
+			<div>Program
+				<div>Bement
+					<div>Cat</div>
+				</div>
+				<div>Gross</div>
+			</div>
+		</div>
+		<div>Fish</div>
+	</div>
+	<button>先序遍历</button>
+	<button>中序遍历</button>
+	<br/>
+	<input id="search" placeholder="请在此输入查询的节点">
+	<button>先序搜索</button>
+	<button>中序搜索</button>
+	<script src="task.js"></script>
+</body>
+</html>
