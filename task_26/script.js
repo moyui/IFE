@@ -2,6 +2,13 @@ var count = 0;    /*计算飞船数量*/
 var list = document.getElementById('list');
 var shipAdd = list.getElementById('button');
 
+
+var Mediator = {    /*数据包类*/
+	id: 0,
+	commond: '',
+	random: random()
+};
+
 var AddEvent = (function() {
 	if (document.addEventListener) {
 		return function(ele, event, func) {
@@ -27,22 +34,20 @@ var random = function() {
 	}
 };
 
-var addShip = function() {
+var addShip = function() {    /*指挥官面板*/
 	var shipDiv = document.createElement('div');
+	shipDiv.setAttribute('value', count);
 	count++;
-	var shipIntro = document.createElement('span');	
-	var shipStartFly = document.createElement('button');
-	var shipStopFly = document.createElement('button');
-	var shipDestroy = document.createElement('button');
-	shipDiv.appendChild(shipIntro);
-	shipDiv.appendChild(shipStartFly);
-	shipDiv.appendChild(shipStopFly);
-	shipDiv.appendChild(shipDestroy);
-	shipIntro.innerText = '对' + count + '号飞船下达指令：';
-	shipStartFly.innerText = '开始飞行';
-	shipStopFly.innerText = '停止飞行';
-	shipDestroy.innerText = '销毁';
+	addShipProcess(shipDiv, 'span', '对' + count + '号飞船下达指令：', 0);
+	addShipProcess(shipDiv, 'button', '开始飞行', fly);
+	addShipProcess(shipDiv, 'button', '停止飞行', stop);
+	addShipProcess(shipDiv, 'button', '销毁', destroy);
 	list.insertBefore(shipDiv, shipAdd);
+};
+
+var addShipProcess = function(fatherNode, childNode, text, value) {    /*创建指挥官节点*/
+	fatherNode.appendChild(document.createElement(childNode).setAttribute('value', value).innerText(text));
+	return fatherNode;
 };
 
 var shipStartFly = function() {
@@ -63,4 +68,8 @@ var shipStartFly = function() {
 		ship.style.left = x + b + 'px';
 		ship.style.top = y + a + 'px';
 	}, 30);
+};
+
+var stop = function() {
+	 
 };
