@@ -57,8 +57,8 @@ a {
 }
 
 .planet {
-	width: 395px;
-	height: 400px;
+	width: 300px;
+	height: 300px;
 	background-position: 0 0;
 }
 /*图片导入结束*/
@@ -67,20 +67,40 @@ a {
 
 /*整体宽度控制*/
 .wrapper {
-	width: 800px;
+	width: 600px;
 	height: 1000px;
 	margin: 0 auto;
-
 }
 
 .display {
-	width: 800px;
-	height: 800px;	
-	position: relative;
+	width: 600px;
+	height: 600px;
+	position: relative;	
 }
 
 .planet {
+	left: 150px;
+	top: 150px;
 	position: absolute;
-	top: 10%;
-	left: 25%;
+}
+
+.control {
+	width: 600px;
+	margin-top: 30px;
+	padding: 20px;
+	border: 1px solid #000000;
+}
+
+button {
+	padding: 10px;
+	border: 1px solid #878787;
+	border-radius: 10px;
+}
+
+.ship {
+	width: 140px;
+	height: 60px;
+	left: -70px;
+	top: -30px;
+	background-position: -300px 0;
 }
