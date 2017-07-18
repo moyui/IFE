@@ -1,5 +1,5 @@
 var AddEvent = (function() {
-	if(document.addEventListener) {
+	if (document.addEventListener) {
 		return function(ele, event, func) {
 			ele.addEventListener(event, func, false);
 		};
