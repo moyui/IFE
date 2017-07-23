@@ -1,75 +1,107 @@
-var count = 0;    /*计算飞船数量*/
-var list = document.getElementById('list');
-var shipAdd = list.getElementById('button');
-
-
-var Mediator = {    /*数据包类*/
-	id: 0,
-	commond: '',
-	random: random()
+/*飞船类*/
+var ship = function(id) {
+	// 飞船编号
+	this.id = id;
+	// 飞船角度
+	this.ag = 0;
+	// 飞船能源
+	this.power = 100;
+	// 能源消耗速度
+	this.consume = -1;
+	// 飞船状态
+	this.state = 0;
+	// 飞船初始位置
+	this.x = 300;
+	this.y = 300;
+	// 飞船绕地半径
+	this.r = 225;
+	// 飞船节点
+	this.ship;
+	// 时间间隔
+	this.interval;
+	// 创建飞船
+	this.create();
 };
 
-var AddEvent = (function() {
-	if (document.addEventListener) {
-		return function(ele, event, func) {
-			ele.addEventListener(event, func, false);
-		};
-	} else if (document.attachEvent) {
-		return function(ele, event, func) {
-			ele.attachEvent('on' + event, func);
-		};
-	} else {
-		return function (ele, event, func) {
-			ele['on' + event] = func;
-		};
-	}
-})();
+//创建飞船
+Ship.prototype.create = function() {
+	var display = document.getElementById("display"),
+		control = document.getElementById("control"),
+		shipAdd = control.getElementByTagName("button"),
+		ship = document.createElement("div"),
+		controlBar = document.createElement("div"),
+		textBtn = document.createElement("span"),
+		startBtn = document.createElement("button"),
+		stopBtn = document.createElement("button"),
+		destroyBtn = document.createrElement("button");
 
-var random = function() {
-	var random = Math.random() * 10;
-	if (random >= 3) {
-		return true;
-	} else {
+	ship.className = "ship" + this.id;
+	ship.innerHTML = this.id + "号-" + this.power + "%";
+	textBtn.innerHTML = "对" + this.id + "号飞船下达指令：";
+	startBtn.innerHTML = "开始飞行";
+	stopBtn.innerHTML = "停止飞行";
+	destroy.innerHTML = "销毁";
+
+	controlBar.appendChild(textBtn);
+	controlBar.appendChild(startBtn);
+	controlBar.appendChild(stopBtn);
+	controlBar.appendChild(destroyBtn);
+	control.insertBefore(controlBar, shipAdd);
+	display.appendChild(ship);
+};
+
+//飞行
+ship.prototype.fly = function() {
+	if (this.state === 1) {
 		return false;
 	}
+	this.state = 1;
+	var self = this;
+	clearInterval(this.interval);
+	this.interval = setInterval(function() {
+		if (self.power < 5) {
+			self.stop();
+			return;
+		}
+		self.power += self.consume;
+		self.ship.innerHTML = self.id + "号-" + self.power + "%";
+		self.ag++;
+		if (self.ag >= 360) {
+			self.ag = 0;
+		}
+		var a = Math.sin( ag*Math.PI/180 ) * self.r;
+		var b = Math.cos( ag*Math.PI/180 ) * self.r;
+		self.ship.style.left = self.x + b + 'px';
+		self.ship.style.top = self.y + a + 'px';
+	}, 80);
 };
 
-var addShip = function() {    /*指挥官面板*/
-	var shipDiv = document.createElement('div');
-	shipDiv.setAttribute('value', count);
-	count++;
-	addShipProcess(shipDiv, 'span', '对' + count + '号飞船下达指令：', 0);
-	addShipProcess(shipDiv, 'button', '开始飞行', fly);
-	addShipProcess(shipDiv, 'button', '停止飞行', stop);
-	addShipProcess(shipDiv, 'button', '销毁', destroy);
-	list.insertBefore(shipDiv, shipAdd);
+//停止
+ship.prototype.stop = function() {
+	if (this.state === 0) {
+		return false;
+	}
+	this.state = 0;
+	clearInterval(this.interval);
 };
 
-var addShipProcess = function(fatherNode, childNode, text, value) {    /*创建指挥官节点*/
-	fatherNode.appendChild(document.createElement(childNode).setAttribute('value', value).innerText(text));
-	return fatherNode;
+//自毁
+ship.prototype.destroy = function() {
+	var display = document.getElementById("display");
+	this.stop();
+	display.removeChild(this.ship);
 };
 
-var shipStartFly = function() {
-	var display = document.getElementById('display');
-	var ship = document.createElement('span');
-	ship.setAttribute('class', 'ship');
-	ship.style.left = 500 + 'px';
-	ship.style.top = 75 + 'px';
-	var r = 225;
-	var x = 300;
-	var y = 300;
-
-	var ag = 0;
-	setInterval(function() {
-		ag++;
-		var a = Math.sin( ag*Math.PI/180 ) * r;
-		var b = Math.cos( ag*Math.PI/180 ) * r;
-		ship.style.left = x + b + 'px';
-		ship.style.top = y + a + 'px';
-	}, 30);
-};
-
-var stop = function() {
-	 
+//信号捕获
+ship.prototype.receive = function(signal) {
+	if (signal.id !== this.id) {
+		return false;
+	}
+	var command = signal.command; 
+	switch(command) {
+		case "fly": this.fly();break;
+		case "stop": this.stop();break;
+		case "destroy": this.destroy();break;
+		default: console.log("任务拒绝");break;
+	}
 };
