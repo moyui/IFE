@@ -1,5 +1,42 @@
+/*中介者*/
+var Mediator = {
+	ships: [],
+	addShip: function(ship, id) {
+		this.ships[id] = ship;
+	},
+	receive: function(signal) {
+		var self = this;
+
+		setTimeout(function() {
+			var ships = self.ships,
+				ship;
+
+			console.log(signal.command + " 指令发送");
+			self.publish(signal);
+
+			if(signal.command === "destroy") {
+				ships[signal.id] = null;
+			}
+		}, 1000);
+	},
+	publish: function(signal) {
+		var random = Math.floor(Math.random() * 100),
+			lose = 30;
+			if (random >= lose) {
+				for(var item in this.ships) {
+					if (this.ships[item] && this.ships[items] instanceof Ship) {
+						this.ships[item].receive(signal);
+					}
+				}
+				console.log(signal.command + " 已成功发送");
+			} else {
+				console.log(signal.command + " 指令丢失");
+			}
+	}
+};
+
 /*飞船类*/
-var ship = function(id) {
+var Ship = function(id) {
 	// 飞船编号
 	this.id = id;
 	// 飞船角度
@@ -51,7 +88,7 @@ Ship.prototype.create = function() {
 };
 
 //飞行
-ship.prototype.fly = function() {
+Ship.prototype.fly = function() {
 	if (this.state === 1) {
 		return false;
 	}
@@ -77,7 +114,7 @@ ship.prototype.fly = function() {
 };
 
 //停止
-ship.prototype.stop = function() {
+Ship.prototype.stop = function() {
 	if (this.state === 0) {
 		return false;
 	}
@@ -86,14 +123,14 @@ ship.prototype.stop = function() {
 };
 
 //自毁
-ship.prototype.destroy = function() {
+Ship.prototype.destroy = function() {
 	var display = document.getElementById("display");
 	this.stop();
 	display.removeChild(this.ship);
 };
 
 //信号捕获
-ship.prototype.receive = function(signal) {
+Ship.prototype.receive = function(signal) {
 	if (signal.id !== this.id) {
 		return false;
 	}
