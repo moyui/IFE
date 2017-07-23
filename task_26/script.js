@@ -8,9 +8,8 @@ var Mediator = {
 		var self = this;
 
 		setTimeout(function() {
-			var ships = self.ships,
-				ship;
-
+			var ships = self.ships;
+			
 			console.log(signal.command + " 指令发送");
 			self.publish(signal);
 
