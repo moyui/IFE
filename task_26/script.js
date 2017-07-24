@@ -141,3 +141,14 @@ Ship.prototype.receive = function(signal) {
 		default: console.log("任务拒绝");break;
 	}
 };
+
+/*指挥官类*/
+var Commander = function() {};
+
+Commander.prototype.command = function(signal) {
+	Mediator.receive(signal);
+};
+
+(function() {
+
+});
