@@ -1,3 +1,20 @@
+/*事件绑定*/
+var AddEvent = (function() {
+	if (document.addEventListener) {
+		return function(ele, event, func) {
+			ele.addEventListener(event, func, false);
+		};
+	} else if (document.attachEvent) {
+		return function(ele, event, func) {
+			ele.attachEvent('on' + event, func);
+		};
+	} else {
+		return function (ele, event, func) {
+			ele['on' + event] = func;
+		};
+	}
+})();
+
 /*中介者*/
 var Mediator = {
 	ships: [],
@@ -63,7 +80,7 @@ var Ship = function(id) {
 Ship.prototype.create = function() {
 	var display = document.getElementById("display"),
 		control = document.getElementById("control"),
-		shipAdd = control.getElementByTagName("button"),
+		shipAdd = control.getElementsByTagName("button")[0],
 		ship = document.createElement("div"),
 		controlBar = document.createElement("div"),
 		textBtn = document.createElement("span"),
@@ -76,7 +93,11 @@ Ship.prototype.create = function() {
 	textBtn.innerHTML = "对" + this.id + "号飞船下达指令：";
 	startBtn.innerHTML = "开始飞行";
 	stopBtn.innerHTML = "停止飞行";
-	destroy.innerHTML = "销毁";
+	destroyBtn.innerHTML = "销毁";
+
+	buttonBind(startBtn);
+	buttonBind(stopBtn);	
+	buttonBind(destroyBtn);
 
 	controlBar.appendChild(textBtn);
 	controlBar.appendChild(startBtn);
@@ -149,6 +170,29 @@ Commander.prototype.command = function(signal) {
 	Mediator.receive(signal);
 };
 
-(function() {
+/*按钮绑定*/
+var shipBind = function() {
+	id = 0;
+	var ship = new Ship(id);
+    Mediator.addShip(ship, id);
+    id++;
+    console.log("创建飞船");
+};
 
-});
+var buttonBind = function(button) {
+	var context = button.innerHTML;
+	if (context === "开始飞行") {
+		addEvent(button, "click", Ship.create);
+	} else if (context === "停止飞行") {
+		addEvent(button, "click", Ship.stop);
+	} else {
+		addEvent(button, "click", Ship.destroy);
+	}
+};
+
+(function() {
+	var commander = new Commander();
+	var control  = document.getElementById("control");
+		shipAdd = control.getElementsByTagName("button")[0];
+		AddEvent(shipAdd, "click", shipBind);
+}());
