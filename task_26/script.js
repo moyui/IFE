@@ -70,6 +70,8 @@ var Ship = function(id) {
 	this.r = 225;
 	// 飞船节点
 	this.ship;
+	//控制台节点
+	this.control;
 	// 时间间隔
 	this.interval;
 	// 创建飞船
@@ -86,18 +88,19 @@ Ship.prototype.create = function() {
 		textBtn = document.createElement("span"),
 		startBtn = document.createElement("button"),
 		stopBtn = document.createElement("button"),
-		destroyBtn = document.createrElement("button");
+		destroyBtn = document.createElement("button");
 
-	ship.className = "ship" + this.id;
+	ship.className = "img ship";
 	ship.innerHTML = this.id + "号-" + this.power + "%";
 	textBtn.innerHTML = "对" + this.id + "号飞船下达指令：";
 	startBtn.innerHTML = "开始飞行";
 	stopBtn.innerHTML = "停止飞行";
 	destroyBtn.innerHTML = "销毁";
 
-	buttonBind(startBtn);
-	buttonBind(stopBtn);	
-	buttonBind(destroyBtn);
+	//buttonBind(Ship, startBtn);
+	//buttonBind(Ship, stopBtn);	
+	//buttonBind(Ship, destroyBtn);
+
 
 	controlBar.appendChild(textBtn);
 	controlBar.appendChild(startBtn);
@@ -105,6 +108,13 @@ Ship.prototype.create = function() {
 	controlBar.appendChild(destroyBtn);
 	control.insertBefore(controlBar, shipAdd);
 	display.appendChild(ship);
+
+	this.ship = ship;
+    this.controlBar = controlBar;	
+
+    AddEvent(startBtn, "click", Ship.fly);
+	AddEvent(stopBtn, "click", Ship.stop);
+	AddEvent(destroyBtn, "click", Ship.destroy);
 };
 
 //飞行
@@ -173,20 +183,21 @@ Commander.prototype.command = function(signal) {
 /*按钮绑定*/
 var shipBind = function() {
 	id = 0;
-	var ship = new Ship(id);
-    Mediator.addShip(ship, id);
+	var model = new Ship(id);
+    Mediator.addShip(model, id);
     id++;
     console.log("创建飞船");
 };
 
-var buttonBind = function(button) {
+var buttonBind = function(model, button) {
 	var context = button.innerHTML;
 	if (context === "开始飞行") {
-		addEvent(button, "click", Ship.create);
+		model.fly();
+		AddEvent(button, "click", model.fly);	
 	} else if (context === "停止飞行") {
-		addEvent(button, "click", Ship.stop);
+		AddEvent(button, "click", model.stop);
 	} else {
-		addEvent(button, "click", Ship.destroy);
+		AddEvent(button, "click", model.destroy);
 	}
 };
 

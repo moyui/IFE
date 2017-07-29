@@ -92,6 +92,7 @@ a {
 }
 
 button {
+	margin: 10px;
 	padding: 10px;
 	border: 1px solid #878787;
 	border-radius: 10px;
@@ -99,8 +100,13 @@ button {
 
 .ship {
 	width: 140px;
-	height: 60px;
-	left: -70px;
-	top: -30px;
+	top: 30px;
+	left: 230px;
+	position: absolute;
 	background-position: -300px 0;
+	text-align: center;
+	line-height: 60px;
+	font-size: 20px;
+	color: white;
 }
+
