@@ -97,24 +97,15 @@ Ship.prototype.create = function() {
 	stopBtn.innerHTML = "停止飞行";
 	destroyBtn.innerHTML = "销毁";
 
-	//buttonBind(Ship, startBtn);
-	//buttonBind(Ship, stopBtn);	
-	//buttonBind(Ship, destroyBtn);
-
-
 	controlBar.appendChild(textBtn);
 	controlBar.appendChild(startBtn);
 	controlBar.appendChild(stopBtn);
 	controlBar.appendChild(destroyBtn);
 	control.insertBefore(controlBar, shipAdd);
-	display.appendChild(ship);
+	display.appendChild(ship);	
 
 	this.ship = ship;
-    this.controlBar = controlBar;	
-
-    AddEvent(startBtn, "click", Ship.fly);
-	AddEvent(stopBtn, "click", Ship.stop);
-	AddEvent(destroyBtn, "click", Ship.destroy);
+    this.control = controlBar;	
 };
 
 //飞行
@@ -131,15 +122,17 @@ Ship.prototype.fly = function() {
 			return;
 		}
 		self.power += self.consume;
-		self.ship.innerHTML = self.id + "号-" + self.power + "%";
+		console.log(self.ship);
+
+		//model.innerHTML = self.id + "号-" + self.power + "%";
 		self.ag++;
 		if (self.ag >= 360) {
 			self.ag = 0;
 		}
-		var a = Math.sin( ag*Math.PI/180 ) * self.r;
-		var b = Math.cos( ag*Math.PI/180 ) * self.r;
-		self.ship.style.left = self.x + b + 'px';
-		self.ship.style.top = self.y + a + 'px';
+		var a = Math.sin( self.ag * Math.PI / 180 ) * self.r;
+		var b = Math.cos( self.ag * Math.PI / 180 ) * self.r;
+		//model.style.left = self.x + b + 'px';
+		//model.style.top = self.y + a + 'px';
 	}, 80);
 };
 
@@ -189,21 +182,33 @@ var shipBind = function() {
     console.log("创建飞船");
 };
 
-var buttonBind = function(model, button) {
-	var context = button.innerHTML;
-	if (context === "开始飞行") {
-		model.fly();
-		AddEvent(button, "click", model.fly);	
-	} else if (context === "停止飞行") {
-		AddEvent(button, "click", model.stop);
-	} else {
-		AddEvent(button, "click", model.destroy);
-	}
-};
-
 (function() {
 	var commander = new Commander();
-	var control  = document.getElementById("control");
+
+	var control  = document.getElementById("control"),
 		shipAdd = control.getElementsByTagName("button")[0];
-		AddEvent(shipAdd, "click", shipBind);
+	AddEvent(shipAdd, "click", shipBind);
+
+	addHandler(control, "click", function (event) {
+        var btn = getTarget(event),
+            controlBar = btn.parentNode,
+            index = -1,
+            commands = ["fly", "stop", "destroy"];
+            if (btn.tagName === "BUTTON") {
+            	[].forEach.call(controlBar.querySelectorAll("button"), function (tempBtn, tempIndex) {
+                	if(btn === tempBtn) {
+                    	index = tempIndex;
+                	}
+            	});
+        	}
+            if(index === 1) {
+                control.removeChild(btn.parentNode);
+            }
+
+            commander.command({
+                index: parseInt(controlBar.querySelector("span").innerHTML.substr(1, 1), 10),
+                command: commands[index]
+            });
+            console.log(commands[index] + " 指令从指挥官出发出");
+    });
 }());
