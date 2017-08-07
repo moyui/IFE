@@ -1,0 +1,108 @@
+/*css重置*/
+html, body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, table, td, th, tr, img, div, dl, dt, dd, input, label, figure {
+    margin: 0;
+    padding: 0;
+}
+
+*,*:after,*:before {
+   -webkit-box-sizing: border-box;
+   box-sizing: border-box;
+}
+
+body {
+    font-size: 12px;
+    font-family: "Arial", "Microsoft YaHei", sans-serif;
+}
+
+img {
+    border: none;
+}
+
+li {
+    list-style: none;
+}
+
+input, select, textarea, button {
+    background: none;
+    /*解决输入框兼容问题*/
+    outline: none;
+    /*聚焦时样式*/
+    border: none;
+    /*盒子模型*/
+    vertical-align: middle
+    /*对不齐的问题*/
+}
+
+textarea {
+    resize: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: "\200b";
+    display: block;
+    height: 0;
+    clear: both;
+}
+/* css重置完成 */
+
+/*页面开始*/
+
+/*整体宽度控制*/
+body {
+    background-color: #CCCCCC;
+}
+
+.wrapper {
+    width: 500px;
+    height: 50px;
+    margin: 0 auto;
+    vertical-align: middle;
+    background-color: #FFFFFF;    
+    position: relative;
+
+}   
+
+.text {
+    font-size: 16px;
+    line-height: 50px;
+    position: absolute;
+    right: 385px;
+}
+
+.input {
+    width: 350px;
+    height: 30px;
+    border: 1px solid #878787;
+    border: 1px solid #878787;
+    border-radius: 5px;
+    line-height: 100px;
+    vertical-align: middle;
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    padding-left: 10px;
+}
+
+.test {
+    color: white;
+    background-color: #436EEE;
+    border: 1px solid #878787;
+    border-radius: 5px;
+    vertical-align: middle;
+    width: 100px;
+    height: 30px;
+    float: right;
+    margin-right: 25px;
+}
+
+.hint {
+    position: absolute;
+    left: 60px;
+    top: 70px;
+}
+
