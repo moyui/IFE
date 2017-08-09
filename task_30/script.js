@@ -20,14 +20,14 @@ var AddEvent = (function() {
 		inputs = formWrap.querySelectorAll(".input"),
 		btn = document.getElementById("button");
 		[].forEach.call(inputs, function(value, index, array) {
-			addHandler(value, "focus", function(){
+			AddEvent(value, "focus", function(){
 				init(this.parentNode, index);
 			});
-		    addHandler(value, "blur", function() {
+		    AddEvent(value, "blur", function() {
             	test(this.parentNode, index);
         	});
 		});
-		addHandler(btn, "click", function() {
+		AddEvent(btn, "click", function() {
         	var allPass = true;
         	[].forEach.call(inputs, function(value, index, array) {
             	if(!test(value.parentNode, index)) {
@@ -41,7 +41,7 @@ var AddEvent = (function() {
 function init(form, index) {
 	var input = form.getElementsByClassName("input")[0],
 		inputText = input.value.trim(),
-		hint = form.querySelector(".input"),
+		hint = form.querySelector(".hint"),
 		hintArr  = ["请输入名称", "请输入密码", "再次输入相同的密码", "请输入邮箱", "请输入手机号"];
 
 	hint.innerHTML = hintArr[index];
@@ -52,7 +52,7 @@ function init(form, index) {
 function test(form, index) {
 	var input = form.getElementsByClassName("input")[0],
 		inputText = input.value.trim(),
-		hint = form.querySelector("input"),
+		hint = form.querySelector(".hint"),
 		testText = inputText.replace(/[\u4E00-\uFA29]|[\uE7C7-\uE7F3]/g, "aa"),
         result = false;
         if(!testText) {
