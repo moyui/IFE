@@ -1,0 +1,97 @@
+/*css重置*/
+html, body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, table, td, th, tr, img, div, dl, dt, dd, input, label, figure {
+    margin: 0;
+    padding: 0;
+}
+
+*,*:after,*:before {
+   -webkit-box-sizing: border-box;
+   box-sizing: border-box;
+}
+
+body {
+    font-size: 12px;
+    font-family: "Arial", "Microsoft YaHei", sans-serif;
+}
+
+img {
+    border: none;
+}
+
+li {
+    list-style: none;
+}
+
+input, select, textarea, button {
+    background: none;
+    /*解决输入框兼容问题*/
+    outline: none;
+    /*聚焦时样式*/
+    border: none;
+    /*盒子模型*/
+    vertical-align: middle
+    /*对不齐的问题*/
+}
+
+textarea {
+    resize: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: "\200b";
+    display: block;
+    height: 0;
+    clear: both;
+}
+/* css重置完成 */
+
+/*页面开始*/
+form {
+	width: 600px;
+	height: 600px;
+	margin: 0 auto;
+	padding: 50px;
+}
+
+.radio {
+	height: 20px;
+    width: 20px;
+    margin: 40px;
+}
+
+select {
+	border: 1px solid #000000;
+	margin: 0 20px 0 40px;
+	width: 100px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px;
+    border-radius: 5px;
+    display: none;
+}
+
+select:first-child, select:nth-child(2) {
+    display: inline-block;
+}
+
+#employeeInfo {	
+	margin-left: 40px;
+    margin-top: 40px;
+    font-size: 16px;    
+    display: none;
+}
+
+.employment {
+    width: 300px;
+    height: 30px;
+    border: 1px solid #000000;
+    line-height: 30px;
+    border-radius: 5px;
+    outline: none;
+    padding-left: 5px;
+}

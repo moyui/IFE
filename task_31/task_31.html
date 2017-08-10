@@ -3,14 +3,15 @@
 
 <head>
 	<meta charset="UTF-8">
+	<link href="style.css" rel="stylesheet" type="text/css">
 	<title>task_31</title>
 </head>
 
 <body>
 	<form>
-		<input type="radio" id="student" name="identity" checked="checked"><label for="student">在校生</label>
-		<input type="radio" id="nonStudent" name="identity"><label for="nonStudent">非在校生</label>
-		<div class="studentInfo">
+		<input type="radio" id="student" class="radio" name="identity" checked="checked"><label for="student">在校生</label>
+		<input type="radio" id="nonStudent" class="radio" name="identity"><label for="nonStudent">非在校生</label>
+		<div id="studentInfo">
 			<select>
                 <option>北京</option>
                 <option>武汉</option>
@@ -23,11 +24,12 @@
             	<option>武汉大学</option>
             </select>
 		</div>
-		<div class="employeeInfo">
-            <label for="employment">就业单位</label>
-            <input type="text" id="employment">
+		<div id="employeeInfo">
+            <label for="employment">就业单位:</label>
+            <input type="text" id="employment" class="employment">
         </div>
 	</form>
+	<script src="script.js"></script>
 </body>
 
 </html>
