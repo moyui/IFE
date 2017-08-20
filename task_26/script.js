@@ -15,6 +15,13 @@ var AddEvent = (function() {
 	}
 })();
 
+
+/*捕获目标*/
+function getTarget(event) {
+    event = event || window.event;
+    return event.target || event.srcElement;
+}
+
 /*中介者*/
 var Mediator = {
 	ships: [],
@@ -29,10 +36,6 @@ var Mediator = {
 			
 			console.log(signal.command + " 指令发送");
 			self.publish(signal);
-
-			if(signal.command === "destroy") {
-				ships[signal.id] = null;
-			}
 		}, 1000);
 	},
 	publish: function(signal) {
@@ -40,11 +43,11 @@ var Mediator = {
 			lose = 30;
 			if (random >= lose) {
 				for(var item in this.ships) {
-					if (this.ships[item] && this.ships[items] instanceof Ship) {
-						this.ships[item].receive(signal);
+					if (this.ships[item] && this.ships[item] instanceof Ship) {
+						this.ships[item].receive(signal);				
+						console.log(signal.command + " 已成功发送");
 					}
 				}
-				console.log(signal.command + " 已成功发送");
 			} else {
 				console.log(signal.command + " 指令丢失");
 			}
@@ -58,16 +61,16 @@ var Ship = function(id) {
 	// 飞船角度
 	this.ag = 0;
 	// 飞船能源
-	this.power = 100;
+	this.power = 1000;
 	// 能源消耗速度
 	this.consume = -1;
 	// 飞船状态
 	this.state = 0;
 	// 飞船初始位置
-	this.x = 300;
-	this.y = 300;
+	this.x = 230;
+	this.y = 30;
 	// 飞船绕地半径
-	this.r = 225;
+	this.r = 240;
 	// 飞船节点
 	this.ship;
 	//控制台节点
@@ -82,7 +85,7 @@ var Ship = function(id) {
 Ship.prototype.create = function() {
 	var display = document.getElementById("display"),
 		control = document.getElementById("control"),
-		shipAdd = control.getElementsByTagName("button")[0],
+		shipAdd = document.getElementById("createBtn"),
 		ship = document.createElement("div"),
 		controlBar = document.createElement("div"),
 		textBtn = document.createElement("span"),
@@ -124,15 +127,17 @@ Ship.prototype.fly = function() {
 		self.power += self.consume;
 		console.log(self.ship);
 
-		//model.innerHTML = self.id + "号-" + self.power + "%";
+		self.ship.innerHTML = self.id + "号-" + self.power + "%";
 		self.ag++;
 		if (self.ag >= 360) {
 			self.ag = 0;
 		}
+		//计算偏移量
 		var a = Math.sin( self.ag * Math.PI / 180 ) * self.r;
-		var b = Math.cos( self.ag * Math.PI / 180 ) * self.r;
-		//model.style.left = self.x + b + 'px';
-		//model.style.top = self.y + a + 'px';
+		var b = 300 - Math.cos( self.ag * Math.PI / 180 ) * self.r;
+		console.log(a,b);
+		self.ship.style.left = self.x + a + 'px';
+		self.ship.style.top = self.y + b + 'px';
 	}, 80);
 };
 
@@ -148,13 +153,13 @@ Ship.prototype.stop = function() {
 //自毁
 Ship.prototype.destroy = function() {
 	var display = document.getElementById("display");
-	this.stop();
 	display.removeChild(this.ship);
+	Mediator.ships[this.id] = null;
 };
 
 //信号捕获
 Ship.prototype.receive = function(signal) {
-	if (signal.id !== this.id) {
+	if (signal.id !== this.id) {	console.log(signal.id,this.id);
 		return false;
 	}
 	var command = signal.command; 
@@ -173,42 +178,46 @@ Commander.prototype.command = function(signal) {
 	Mediator.receive(signal);
 };
 
-/*按钮绑定*/
-var shipBind = function() {
-	id = 0;
-	var model = new Ship(id);
-    Mediator.addShip(model, id);
-    id++;
-    console.log("创建飞船");
-};
 
 (function() {
 	var commander = new Commander();
 
 	var control  = document.getElementById("control"),
 		shipAdd = control.getElementsByTagName("button")[0];
-	AddEvent(shipAdd, "click", shipBind);
 
-	addHandler(control, "click", function (event) {
+	AddEvent(control, "click", function (event) {
         var btn = getTarget(event),
             controlBar = btn.parentNode,
             index = -1,
             commands = ["fly", "stop", "destroy"];
-            if (btn.tagName === "BUTTON") {
+
+            if(btn.id == "createBtn") {
+            // 创造新飞船
+            	for(var id = 0; id < 4; id++) {                
+                	if(!Mediator.ships[id]) {
+                    	ship = new Ship(id);
+                    	Mediator.addShip(ship, id);
+                    	console.log("创造新飞船");
+                    	break;
+                	}
+                }
+            } else if (btn.tagName === "BUTTON") {
             	[].forEach.call(controlBar.querySelectorAll("button"), function (tempBtn, tempIndex) {
-                	if(btn === tempBtn) {
+                	if(btn == tempBtn) {
                     	index = tempIndex;
                 	}
             	});
-        	}
-            if(index === 1) {
+
+            if(index === 2) {
                 control.removeChild(btn.parentNode);
             }
 
             commander.command({
-                index: parseInt(controlBar.querySelector("span").innerHTML.substr(1, 1), 10),
+                id: parseInt(controlBar.querySelector("span").innerHTML.substr(1, 1), 10),
                 command: commands[index]
             });
             console.log(commands[index] + " 指令从指挥官出发出");
-    });
-}());
+    	}
+
+ 	});
+})();
