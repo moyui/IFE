@@ -6,9 +6,9 @@
  *    "上海": 40
  * };
  */
-var aqiData = {};	
-var get_city = document.getElementById("aqi-city-input");
-var get_value = document.getElementById("aqi-value-input");
+var aqiData = {};
+var get_city = document.getElementById('aqi-city-input');
+var get_value = document.getElementById('aqi-value-input');
 /**
  * 从用户输入中获取数据，向aqiData中增加一条数据
  * 然后渲染aqi-list列表，增加新增的数据

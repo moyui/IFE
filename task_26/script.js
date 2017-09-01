@@ -18,8 +18,8 @@ var AddEvent = (function() {
 
 /*捕获目标*/
 function getTarget(event) {
-    event = event || window.event;
-    return event.target || event.srcElement;
+	event = event || window.event;
+	return event.target || event.srcElement;
 }
 
 /*中介者*/
@@ -44,7 +44,7 @@ var Mediator = {
 			if (random >= lose) {
 				for(var item in this.ships) {
 					if (this.ships[item] && this.ships[item] instanceof Ship) {
-						this.ships[item].receive(signal);				
+						this.ships[item].receive(signal);               
 						console.log(signal.command + " 已成功发送");
 					}
 				}
@@ -105,10 +105,10 @@ Ship.prototype.create = function() {
 	controlBar.appendChild(stopBtn);
 	controlBar.appendChild(destroyBtn);
 	control.insertBefore(controlBar, shipAdd);
-	display.appendChild(ship);	
+	display.appendChild(ship);  
 
 	this.ship = ship;
-    this.control = controlBar;	
+	this.control = controlBar;  
 };
 
 //飞行
@@ -159,7 +159,7 @@ Ship.prototype.destroy = function() {
 
 //信号捕获
 Ship.prototype.receive = function(signal) {
-	if (signal.id !== this.id) {	console.log(signal.id,this.id);
+	if (signal.id !== this.id) {    console.log(signal.id,this.id);
 		return false;
 	}
 	var command = signal.command; 
@@ -186,38 +186,38 @@ Commander.prototype.command = function(signal) {
 		shipAdd = control.getElementsByTagName("button")[0];
 
 	AddEvent(control, "click", function (event) {
-        var btn = getTarget(event),
-            controlBar = btn.parentNode,
-            index = -1,
-            commands = ["fly", "stop", "destroy"];
+		var btn = getTarget(event),
+			controlBar = btn.parentNode,
+			index = -1,
+			commands = ["fly", "stop", "destroy"];
 
-            if(btn.id == "createBtn") {
-            // 创造新飞船
-            	for(var id = 0; id < 4; id++) {                
-                	if(!Mediator.ships[id]) {
-                    	ship = new Ship(id);
-                    	Mediator.addShip(ship, id);
-                    	console.log("创造新飞船");
-                    	break;
-                	}
-                }
-            } else if (btn.tagName === "BUTTON") {
-            	[].forEach.call(controlBar.querySelectorAll("button"), function (tempBtn, tempIndex) {
-                	if(btn == tempBtn) {
-                    	index = tempIndex;
-                	}
-            	});
+			if(btn.id == "createBtn") {
+			// 创造新飞船
+				for(var id = 0; id < 4; id++) {                
+					if(!Mediator.ships[id]) {
+						ship = new Ship(id);
+						Mediator.addShip(ship, id);
+						console.log("创造新飞船");
+						break;
+					}
+				}
+			} else if (btn.tagName === "BUTTON") {
+				[].forEach.call(controlBar.querySelectorAll("button"), function (tempBtn, tempIndex) {
+					if(btn == tempBtn) {
+						index = tempIndex;
+					}
+				});
 
-            if(index === 2) {
-                control.removeChild(btn.parentNode);
-            }
+			if(index === 2) {
+				control.removeChild(btn.parentNode);
+			}
 
-            commander.command({
-                id: parseInt(controlBar.querySelector("span").innerHTML.substr(1, 1), 10),
-                command: commands[index]
-            });
-            console.log(commands[index] + " 指令从指挥官出发出");
-    	}
-
- 	});
+			commander.command({
+				id: parseInt(controlBar.querySelector("span").innerHTML.substr(1, 1), 10),
+				command: commands[index]
+			});
+			console.log(commands[index] + " 指令从指挥官出发出");
+		}
+	});
 })();
+
