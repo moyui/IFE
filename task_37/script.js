@@ -1,18 +1,19 @@
-var addEvent = (function () {
-    if(document.addEventListener) {
-        return function(ele, event, func) {
+function addEvent(ele, event, func) {
+    if(ele.addEventListener) {
+        addEvent = function(ele, event, func) {
             ele.addEventListener(event, func, false);
         };
-    } else if (document.attachEvent) {
-        return function(ele, event, func) {
+    } else if (ele.attachEvent) {
+        addEvent = function(ele, event, func) {
             ele.attachEvent('on' + event, func);
         };
     } else {
-        return function(ele, event, func) {
-            ele['on' + event] = func;
+        addEvent = function(ele, event, func) {
+            ele['on' + event] = func;   
         };
     }
-})();
+    return addEvent(ele, event, func);
+};
 
 function AlertBar(config) {
     this.isShow = config.isShow || false;
@@ -30,39 +31,45 @@ function AlertBar(config) {
 AlertBar.prototype.init = function() {
     var alertBar = document.createElement('div'),
         title = document.createElement('h4'),
+        clickBar = document.createElement('div'),
         content = document.createElement('p'),
         confirm = document.createElement('button'),
         cancel = document.createElement('button');
 
-    var showdiv = document.getElementById('show');
+    var showdiv = document.getElementById('show'),
+        shadow = document.getElementById('shadow');
 
     confirm.innerHTML = '确认';
     cancel.innerHTML = '取消';
     title.innerHTML = '浮出层';
     content.innerHTML = '这是一个浮出层';
+    alertBar.className = 'alertbar';
+    clickBar.className = 'clickbar';
 
     alertBar.appendChild(title);
     alertBar.appendChild(content);
-    alertBar.appendChild(confirm);
-    alertBar.appendChild(cancel);
+    clickBar.appendChild(cancel);    
+    clickBar.appendChild(confirm);
+    alertBar.appendChild(clickBar);
 
-    this.alertBar = alertBar;
-    this.alertBar.style.position = 'absolute';
+    shadow.style.display = 'block';    
+    this.alertBar = alertBar;    
 
     showdiv.appendChild(alertBar); 
     this.calculate();
+    addEvent(confirm, 'click', this.click.bind(this));
+    addEvent(cancel,'click', this.click.bind(this));
 };
 
 AlertBar.prototype.calculate = function() {
-    var screenWidth = document.body.clientWidth,
-        screenHeight = document.body.clientHeight;
-        console.log(screenHeight);
+    var screenWidth = window.innerWidth,
+        screenHeight = window.innerHeight;
 
     this.width = screenWidth / 4 ;
     this.height = screenHeight / 4 ; 
 
-    this.positionX = (this.width >= 14) ? this.width : 14;
-    this.positionY = (this.height >= 14) ? this.height : 14;
+    this.positionX = (this.width >= 14) ? (this.width + this.width / 2) : 14;
+    this.positionY = (this.height >= 14) ? (this.height + this.height / 2) : 14; 
 
     this.alertBar.style.width = this.width + 'px';
     this.alertBar.style.height = this.height + 'px';
@@ -70,6 +77,14 @@ AlertBar.prototype.calculate = function() {
     this.alertBar.style.top = this.positionY + 'px';
 };
 
+AlertBar.prototype.click = function() {
+    var showdiv = document.getElementById('show'),
+        shadow = document.getElementById('shadow'),
+        alertBar = this.alertBar;
+        
+    shadow.style.display = 'none';
+    showdiv.removeChild(alertBar);
+};
 
 (function init() {
     var btn = document.getElementById('btn');
