@@ -1,38 +1,3 @@
-function addEvent(ele, event, func) {
-    if(ele.addEventListener) {
-        addEvent = function(ele, event, func) {
-            ele.addEventListener(event, func, false);
-        };
-    } else if (ele.attachEvent) {
-        addEvent = function(ele, event, func) {
-            ele.attachEvent('on' + event, func);
-        };
-    } else {
-        addEvent = function(ele, event, func) {
-            ele['on' + event] = func;   
-        };
-    }
-    return addEvent(ele, event, func);
-};
-
-function removeEvent(ele, event, func){
-    if(ele.removeEventListener) {
-        removeHandler = function(ele, event, func) {
-            ele.removeEventListener(event, func, false);
-        };
-    } else if (ele.detachEvent) {
-        removeHandler = function (ele, event, func) {
-            ele.detachEvent("on" + event, func);
-        };
-    }else{
-        removeHandler = function (ele, event, func) {
-            ele["on" + event] = null;
-        };
-    }
-    return removeHandler(ele, event, func);
-};
-
-
 function AlertBar(config) {
     this.height = config.height || 0;
     this.width = config.width || 0;
@@ -104,20 +69,15 @@ AlertBar.prototype.bind = function() {
 
     addEvent(self.alertBar, 'mousedown', function(event) {
         event = event || window.event;
-        self.alertBar.style.left = event.clientX;
-        self.alertBar.style.top = event.clientY;
-        addEvent(self.alertBar, 'mousemove', function(event) {
-            self.alertBar.style.left = event.clientX;
-            self.alertBar.style.top = event.clientY;
-        });
+
+
     });
     addEvent(document, 'mouseup', function(event){
         event = event || window.event;
-        removeEvent(self.alertBar, 'mousemove', function(event) {
-            self.alertBar.style.left = event.clientX;
-            self.alertBar.style.top = event.clientY;
-        });
+
     });
+
+    addEvent()
 }
 
 AlertBar.prototype.click = function() {
