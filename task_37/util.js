@@ -8,7 +8,7 @@ function addEvent(ele, event, func) {
             ele.attachEvent('on' + event, func);
         };
     } else {
-        addEvent = function(ele, event, func) {
+        addEvent = function(elem, event, func) {
             ele['on' + event] = func;   
         };
     }

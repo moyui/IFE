@@ -20,8 +20,7 @@ AlertBar.prototype.init = function() {
         cancel = document.createElement('button');
 
     var showdiv = document.getElementById('show'),
-        shadow = document.getElementById('shadow'),
-        self = this;
+        shadow = document.getElementById('shadow');
 
     confirm.innerHTML = '确认';
     cancel.innerHTML = '取消';
@@ -40,12 +39,9 @@ AlertBar.prototype.init = function() {
     showdiv.appendChild(alertBar); 
 
     this.alertBar = alertBar; 
+
     this.calculate();
     this.bind();
-
-    addEvent(shadow, 'click', self.click.bind(self));
-    addEvent(confirm, 'click', self.click.bind(self));
-    addEvent(cancel,'click', self.click.bind(self));
 };
 
 AlertBar.prototype.calculate = function() {
@@ -64,29 +60,53 @@ AlertBar.prototype.calculate = function() {
     this.alertBar.style.top = this.positionY + 'px';
 };
 
-AlertBar.prototype.bind = function() {
-    var self = this;
+AlertBar.prototype.bind = function(event) {
+    var self = this,
+        target = getTarget(event),
+        showdiv = document.getElementById('show'),
+        shadow = document.getElementById('shadow');
 
-    addEvent(self.alertBar, 'mousedown', function(event) {
-        event = event || window.event;
-
-
-    });
-    addEvent(document, 'mouseup', function(event){
-        event = event || window.event;
-
-    });
-
-    addEvent()
-}
-
-AlertBar.prototype.click = function() {
-    var showdiv = document.getElementById('show'),
-        shadow = document.getElementById('shadow'),
-        alertBar = this.alertBar;
+    function click() {
+        var alertBar = self.alertBar;
 
     shadow.style.display = 'none';
     showdiv.removeChild(alertBar);
+    };
+
+    function drag(event) {
+        var dragX = 0,
+            dragY = 0;
+
+        event = event || window.event; 
+            switch(event.type) {
+                case 'mousedown' :
+                    dragX = event.clientX - self.offsetLeft;
+                    dragY = event.clientY - self.offsetTop;
+                    break;
+                case 'mousemove' :
+                    self.style.left = event.clientX - dragX + 'px';
+                    self.style.top = event.clientY - dragY + 'px';
+                    break;
+                case 'mouseup' : 
+                    dragX = 0;
+                    dragY = 0;
+                    break;
+                default :
+                    break;
+            };
+        };
+    switch (target) {
+        case 'shaodw' :
+        case 'confirm' :
+        case 'cancel' : 
+            addEvent(target, 'click', click);
+            break;
+        case 'alertBar' : 
+            addEvent(self.alertBar, 'drag', drag);
+            break;
+        default :
+            break;
+    };
 };
 
 (function init() {
