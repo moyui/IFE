@@ -99,10 +99,5 @@ p {
     position: absolute;
     bottom: 5px;
     right: 5px;
-    width: 100;
     height: 49.5px;
-}
-
-.alertbar button {
-    float: right;
 }
