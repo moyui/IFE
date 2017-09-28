@@ -1,0 +1,92 @@
+/*css重置*/
+html, body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, table, td, th, tr, img, div, dl, dt, dd, input, label, figure {
+    margin: 0;
+    padding: 0;
+}
+
+*,*:after,*:before {
+   -webkit-box-sizing: border-box;
+   box-sizing: border-box;
+}
+
+body {
+    font-size: 12px;
+    font-family: "Arial", "Microsoft YaHei", sans-serif;
+}
+
+img {
+    border: none;
+}
+
+li {
+    list-style: none;
+}
+
+input, select, textarea, button {
+    background: none;
+    /*解决输入框兼容问题*/
+    outline: none;
+    /*聚焦时样式*/
+    border: none;
+    /*盒子模型*/
+    vertical-align: middle
+    /*对不齐的问题*/
+}
+
+textarea {
+    resize: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: "\200b";
+    display: block;
+    height: 0;
+    clear: both;
+}
+/* css重置完成 */
+
+.tableShow {
+    margin: 0 auto;
+    font-size: 20px;
+    border-collapse:collapse;
+}
+
+th,td {
+    width: 150px;
+    height: 50px;
+    text-align: center;
+    border: 1px solid #CFCFCF;
+}
+
+th {
+    position: relative;
+    background-color: #000000;
+    color: #FFFFFF;
+    font-weight: normal;
+  }
+
+.inButton, 
+.deButton {
+    padding: 0;
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 8px solid; 
+    right: 20px;
+  }
+
+.inButton {
+    top: 5px;
+    border-color: transparent transparent #FFFFFF transparent;  
+}
+
+.deButton {
+    bottom: 5px;
+    border-color: #FFFFFF transparent transparent transparent;  
+}
+
