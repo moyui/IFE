@@ -1,29 +1,26 @@
 function Table(config) {
-     this.data = config.data || {'title': ['空表'], 'content': ['无数据']};
-     this.rowsLength = this.data['content'].length + 1;
-     this.colsLength = this.data['title'].length;
+    this.data = config.data || {'title': ['空表'], 'content': ['无数据']};
+    this.rowsLength = this.data['content'].length + 1;
+    this.colsLength = this.data['title'].length;
 
-     this.tableShow;        
-     this.init(); 
+    this.tableShow;        
+    this.init(); 
 };
 
 Table.prototype.init = function() {
     var table = document.getElementById('table'),
         tableShow = document.createElement('table');
+
+    tableShow.className = 'tableShow';
+    table.appendChild(tableShow);
+    this.tableShow = tableShow;
+
     for (let i = 0 ; i < this.rowsLength; i++) {
         let tr = document.createElement('tr');
         tableShow.appendChild(tr);
     }   
-    tableShow.className = 'tableShow';
 
-    table.appendChild(tableShow);
-    this.tableShow = tableShow;
-    this.render();
-} 
-
-Table.prototype.render = function() {
     var data = this.data,
-        tableShow = this.tableShow,
         tr = tableShow.querySelectorAll('tr');
 
     data['title'].forEach(function(title, index) {
@@ -41,27 +38,55 @@ Table.prototype.render = function() {
     });
 
     data['content'].forEach(function(dataArray, index) {
-        dataArray.forEach(function(text) {
+        dataArray.forEach(function() {
             var td = document.createElement('td');
-            td.innerHTML = text;
             tr[index + 1].appendChild(td);
+        });
+    });
+
+    this.render();
+    this.sort();
+} 
+
+Table.prototype.render = function() {
+    var data = this.data,
+        tr = this.tableShow.querySelectorAll('tr');
+
+    data['content'].forEach(function(dataArray, index) {
+        var td = tr[index + 1].querySelectorAll('td');
+        dataArray.forEach(function(innerArray, innerIndex) {
+            td[innerIndex].innerHTML = innerArray;
         });
     });
 };
 
-function bubbleSort(array) {
-    var temp;
-    for (let i = 0; i < array.length; i++) {
-        for (let j = i; j < array.length; j++) {
-            if (array[j] > array[j + 1]) {
-                temp = array[j];
-                array[j] = array[j + 1];
-                array[j + 1] = temp;
-            }
-        }
-    }
-    return array;
-}
+Table.prototype.sort = function() {
+    var content = this.data.content,
+        tableShow = this.tableShow,
+        btnin = tableShow.querySelectorAll('.inButton'),
+        btnout = tableShow.querySelectorAll('.deButton'),
+        self = this;
+
+    btnin.forEach(function(node, index) {
+        addEvent(btnin[index], 'click', function() {
+            content.sort(function(d1, d2) {
+                return d1[index + 1] - d2[index + 1]; 
+            });
+        self.render();
+        });
+    });
+
+    btnout.forEach(function(node, index) {
+        addEvent(btnout[index], 'click', function() {
+            content.sort(function(d1, d2) {
+                return d2[index + 1] - d1[index + 1];
+            });
+        self.render();
+        });
+    });
+};
+
+
 
 (function main() {
     var table1 = new Table({
