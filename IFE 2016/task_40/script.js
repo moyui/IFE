@@ -1,5 +1,6 @@
 function Calendar(config) {
     this.days = ['日', '一', '二', '三', '四', '五', '六'];
+    this.date;
     this.mouth;
     this.year;
 
@@ -15,11 +16,14 @@ Calendar.prototype.init = function() {
         calendarShow = document.createElement('table'),
         calendarTitle = document.createElement('table'),
 
+        today = new Date(),
+
         cTtr = document.createElement('tr');
-        for (let i = 0; i < 7; i++) {
+        this.days.forEach(function(content) {
             let cTth = document.createElement('th');
+            cTth.innerHTML = content;
             cTtr.appendChild(cTth);
-        }
+        });
 
         calendarTitle.className = 'calendarTitle';
         calendarShow.className = 'calendarShow';
@@ -28,13 +32,19 @@ Calendar.prototype.init = function() {
         calendar.appendChild(calendarTitle);
         calendar.appendChild(calendarShow);
 
+        this.year = today.getFullYear();
+        this.month = today.getMonth();
+        this.date = today.getDate();
+
         this.calendar = calendar;
         this.calendarShow = calendarShow;
         this.calendarTitle = calendarTitle;
 };
 
 Calendar.prototype.render = function() {
-    var calendarShow = this.calendarShow;
+    var calendarShow = this.calendarShow,
+        fragment = document.createDocumentFragment();
+
 };
 
 (function main() {
