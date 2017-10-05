@@ -1,8 +1,9 @@
 function Calendar(config) {
     this.days = ['日', '一', '二', '三', '四', '五', '六'];
     this.date;
-    this.mouth;
+    this.month;
     this.year;
+    this.day;
 
     this.calendar;
     this.calendarShow;
@@ -35,6 +36,7 @@ Calendar.prototype.init = function() {
         this.year = today.getFullYear();
         this.month = today.getMonth();
         this.date = today.getDate();
+        this.day = today.getDay();
 
         this.calendar = calendar;
         this.calendarShow = calendarShow;
@@ -43,7 +45,18 @@ Calendar.prototype.init = function() {
 
 Calendar.prototype.render = function() {
     var calendarShow = this.calendarShow,
-        fragment = document.createDocumentFragment();
+        fragment = document.createDocumentFragment(),
+
+        date = this.date,
+        month = this.month,
+        year = this.year,
+        day = this.day,
+        monthNext = this.month + 1,
+        //计算当月总天数(最后一天)
+        renderDays = (new Date(year, monthNext, 0)).getDate(),
+        //需要加载的日历行数
+        renderTr = (renderDays + day)/7 + 1;
+        console.log(renderTr);
 
 };
 
