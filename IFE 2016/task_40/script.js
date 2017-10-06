@@ -1,9 +1,10 @@
 function Calendar(config) {
     this.days = ['日', '一', '二', '三', '四', '五', '六'];
-    this.date;
+
     this.month;
     this.year;
-    this.day;
+    this.date;
+    this.firstDay;
 
     this.calendar;
     this.calendarShow;
@@ -36,32 +37,64 @@ Calendar.prototype.init = function() {
         this.year = today.getFullYear();
         this.month = today.getMonth();
         this.date = today.getDate();
-        this.day = today.getDay();
+        //计算本月第一天是星期几
+        this.firstDay = new Date(this.year, this.month, 1).getDay();
 
         this.calendar = calendar;
         this.calendarShow = calendarShow;
         this.calendarTitle = calendarTitle;
+
+        this.render();
 };
 
 Calendar.prototype.render = function() {
     var calendarShow = this.calendarShow,
         fragment = document.createDocumentFragment(),
 
-        date = this.date,
         month = this.month,
         year = this.year,
-        day = this.day,
-        monthNext = this.month + 1,
+
+        firstDay = this.firstDay,
+        monthNext = month + 1,
+        //计算上月空余几天
+        lastDays = (new Date(year, month, 0)).getDate() - firstDay + 1,
         //计算当月总天数(最后一天)
         renderDays = (new Date(year, monthNext, 0)).getDate(),
         //需要加载的日历行数
-        renderTr = (renderDays + day)/7 + 1;
-        console.log(renderTr);
+        renderTr = Math.floor((renderDays + firstDay)/7) + 1;
+        
+    let count = 1,
+        countLast = 1;
 
+    for (let i = 0; i < renderTr; i++) {
+        let tr = document.createElement('tr');
+        for (let j = 0; j < 7; j++) {
+            let td = document.createElement('td');
+            if (i === 0 && firstDay !== 0) {
+                td.innerHTML = lastDays;
+                td.className = 'greyName';
+                firstDay--;
+                lastDays++; 
+            } else if (count <= renderDays) {
+                td.innerHTML = count;
+                td.className = 'normalName';
+                count++;
+            } else {
+                td.innerHTML = countLast;
+                td.className = 'greyName';
+                countLast++;
+            }
+            tr.appendChild(td);
+        };
+        fragment.appendChild(tr);
+    };
+    calendarShow.appendChild(fragment);
+};
+
+Calendar.prototype.bind = function() {
+    
 };
 
 (function main() {
-    var calendar = new Calendar({
-
-    });
-});
+    var calendar = new Calendar();
+})();
