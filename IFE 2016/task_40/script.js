@@ -27,6 +27,7 @@ Calendar.prototype.init = function() {
             cTtr.appendChild(cTth);
         });
 
+        calendar.className = 'calendar';
         calendarTitle.className = 'calendarTitle';
         calendarShow.className = 'calendarShow';
 
@@ -92,7 +93,7 @@ Calendar.prototype.render = function() {
 };
 
 Calendar.prototype.bind = function() {
-    
+
 };
 
 (function main() {

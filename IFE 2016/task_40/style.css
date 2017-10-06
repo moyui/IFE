@@ -1,0 +1,72 @@
+/*css重置*/
+html, body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, table, td, th, tr, img, div, dl, dt, dd, input, label, figure {
+    margin: 0;
+    padding: 0;
+}
+
+*,*:after,*:before {
+   -webkit-box-sizing: border-box;
+   box-sizing: border-box;
+}
+
+body {
+    font-size: 12px;
+    font-family: "Arial", "Microsoft YaHei", sans-serif;
+}
+
+img {
+    border: none;
+}
+
+li {
+    list-style: none;
+}
+
+input, select, textarea, button {
+    background: none;
+    /*解决输入框兼容问题*/
+    outline: none;
+    /*聚焦时样式*/
+    border: none;
+    /*盒子模型*/
+    vertical-align: middle
+    /*对不齐的问题*/
+}
+
+textarea {
+    resize: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: "\200b";
+    display: block;
+    height: 0;
+    clear: both;
+}
+/* css重置完成 */
+html,body {
+    width: 100%;
+    height: 100%;
+}
+
+.calendar {
+    width: 100%;
+    height: 60%;
+}
+
+.calendarTitle {
+    width: 100%;
+    height: 20%;
+    text-align: center;
+}
+
+.calendarShow {
+    width: 100%;
+    height: 80%;
+    text-align: center;
+}
