@@ -90,12 +90,34 @@ Calendar.prototype.render = function() {
         fragment.appendChild(tr);
     };
     calendarShow.appendChild(fragment);
+    this.changeColor();
 };
 
 Calendar.prototype.bind = function() {
 
 };
 
-(function main() {
+Calendar.prototype.changeColor = function() {
+    var color = randomColor(),
+
+        calendarTitle = this.calendarTitle,
+        calendarHead = document.getElementById('calendarHead');
+        
+    calendarTitle.style.backgroundColor = color;
+    calendarHead.style.backgroundColor = color;
+};
+
+Calendar.prototype.slide = function(event) {
+    var touch = event.targetTouches[0];
+
+    var process = {
+        touchMove: function() {
+            
+        },
+    };
+};
+
+(function main() {    
+    document.documentElement.style.fontSize = document.documentElement.clientWidth / 10.8 + 'px';
     var calendar = new Calendar();
 })();

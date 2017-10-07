@@ -36,3 +36,8 @@ function getTarget(event) {
     event = event || window.event;
     return event.target || event.srcElement;
 };
+
+function randomColor() {
+    var color = '#' + ('000000' + Math.floor(Math.random() * 16777215).toString(16)).slice(-6);
+    return color;
+}
