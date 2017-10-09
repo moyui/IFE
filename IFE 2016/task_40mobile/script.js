@@ -14,12 +14,13 @@ function Calendar(config) {
     this.calendarShow;
     this.calendarTitle;
 
+    this.color;
+
     this.init();
 }
 
 Calendar.prototype.init = function() {
     var calendar = document.getElementById('calendar'),
-        calendarShow = document.createElement('table'),
         calendarTitle = document.createElement('table'),
 
         today = new Date(),
@@ -33,14 +34,12 @@ Calendar.prototype.init = function() {
 
         calendar.className = 'calendar';
         calendarTitle.className = 'calendarTitle';
-        calendarShow.className = 'calendarShow';
 
         this.clientWidth = document.documentElement.clientWidth;
         document.documentElement.style.fontSize = this.clientWidth / 10.8 + 'px';
 
         calendarTitle.appendChild(cTtr);
         calendar.appendChild(calendarTitle);
-        calendar.appendChild(calendarShow);
 
         this.year = today.getFullYear();
         this.month = today.getMonth();
@@ -51,31 +50,55 @@ Calendar.prototype.init = function() {
         this.nowDate = today.getDate();
 
         this.calendar = calendar;
-        this.calendarShow = calendarShow;
         this.calendarTitle = calendarTitle;
 
-        this.render();
+        this.renderHead();
+        this.renderShow();
 };
 
-Calendar.prototype.render = function() {              
+Calendar.prototype.renderHead = function() {
+    var month = document.getElementById('headMonth'),
+        year = document.getElementById('headYear'),
+        date = document.getElementById('headDate');
+ 
+    month.innerHTML = (this.month + 1) + '月';
+    year.innerHTML = this.year + '年';
+    //和小米日历一致
+    if ((this.nowMonth === this.month) && (this.nowYear === this.year)) {
+        date.innerHTML = this.nowDate + '日';
+    } else {
+        date.innerHTML = '';
+    }
+};
 
-    var calendarShow = this.calendarShow,
+Calendar.prototype.renderShow = function() {           
+    var calendar = this.calendar,
         fragment = document.createDocumentFragment(),
+        //创建渲染节点
+        calendarShow = document.createElement('table');
 
-        month = this.month,
+    var month = this.month,
         year = this.year,
-        monthNext = month + 1;    
+        monthNext = month + 1, 
+        nowDate = this.nowDate, 
+        nowMonth = this.nowMonth,
+        nowYear = this.nowYear,
         //计算本月第一天是星期几 
-    var firstDay = new Date(this.year, this.month, 1).getDay(),
+        firstDay = new Date(this.year, this.month, 1).getDay(),
         //计算上月空余几天
         lastDays = (new Date(year, month, 0)).getDate() - firstDay + 1,
         //计算当月总天数(最后一天)
         renderDays = (new Date(year, monthNext, 0)).getDate(),
         //需要加载的日历行数
-        renderTr = Math.floor((renderDays + firstDay)/7) + 1;
-        
+        renderTr = Math.ceil((renderDays + firstDay)/7);
+
     var count = 1,
         countLast = 1;
+
+    calendarShow.className = 'calendarShow';
+    calendar.appendChild(calendarShow);
+    this.calendarShow = calendarShow;
+    this.changeColor();
 
     for (let i = 0; i < renderTr; i++) {
         let tr = document.createElement('tr');
@@ -88,6 +111,9 @@ Calendar.prototype.render = function() {
                 lastDays++; 
             } else if (count <= renderDays) {
                 td.innerHTML = count;
+                if (count === nowDate && nowMonth === month && nowYear === year) {
+                    td.style.color = this.color;
+                }
                 td.className = 'normalName';
                 count++;
             } else {
@@ -99,8 +125,8 @@ Calendar.prototype.render = function() {
         };
         fragment.appendChild(tr);
     };
-    calendarShow.appendChild(fragment);
-    this.changeColor();
+    calendarShow.appendChild(fragment);    
+    this.slide();
 };
 
 Calendar.prototype.changeColor = function() {
@@ -108,66 +134,79 @@ Calendar.prototype.changeColor = function() {
 
         calendarTitle = this.calendarTitle,
         calendarHead = document.getElementById('calendarHead');
-        
+
     calendarTitle.style.backgroundColor = color;
     calendarHead.style.backgroundColor = color;
-};
-
-Calendar.prototype.bind = function() {
-
+    this.color = color;
 };
 
 Calendar.prototype.slide = function(event) {
-    var touch = event.targetTouches[0],
-        self = this,        
+    var self = this,        
         calendarShow = this.calendarShow,
         clientWidth = this.clientWidth,
-        ways;
-
-    var startPos = {
-            x: touch.pageX,
-            y: touch.pageY
-        };
+    //私有变量
+        ways,
+        startPos,
+        endPos,
+        absDistant;
 
     var process = {
+        touchStart: function(event) {
+            var touch = event.targetTouches[0];
+            startPos = {
+                x: touch.pageX,
+                y: touch.pageY
+            };
+            addEvent(calendarShow, 'touchmove', process.touchMove);
+        },
+
         touchMove: function(event) {
-            var endPos = {
+            var touch = event.targetTouches[0];
+            //解绑上一步事件
+            removeEvent(calendarShow, 'touchstart', process.touchStart);
+            //将默认操作取消
+            event.preventDefault();
+            //计算滑动距离
+            endPos = {
                 x: touch.pageX - startPos.x,
                 y: touch.pageY - startPos.y
             };
-            //1表示右划，0表示左划
-            ways = (endPos.y > 0) ? 1 : 0;
-            //计算滑动距离
-            event.preventDefault();
+            addEvent(calendarShow, 'touchend', process.touchEnd);
         },
 
         touchEnd: function(event) {
-            var endPos = {
-                x: touch.pageX - startPos.x,
-                y: touch.pageY - startPos.y
-            },
-            absDistant = Math.abs(endPos.y);
+            //解绑上一步事件
+            removeEvent(calendarShow, 'touchmove', process.touchMove);
+            //1表示右划，0表示左划
+            ways = (endPos.x > 0) ? 1 : 0;
+            //计算滑动距离的绝对值
+            absDistant = Math.abs(endPos.x);
+            //判断左右滑动并且达到滑动距离
             if ((ways === 1) && absDistant >= (clientWidth / 5)) {
-                let newDate = new Date(self.year, self.month + 1, 1);
-                //计算新的render时间
-                self.year = newDate.getFullYear();
-                self.month = newDate.getMonth();
-                self.date = newDate.getDate();
-            } else if ((ways === 0) && absDistant >= (clientWidth / 5)) {
                 let newDate = new Date(self.year, self.month - 1, 1);
                 //计算新的render时间
                 self.year = newDate.getFullYear();
                 self.month = newDate.getMonth();
                 self.date = newDate.getDate();
-                removeEvent(calendarShow, 'touchstart', self.slide);
-                removeEvent(calendarShow, 'touchmove', process.touchmove);
-                
-            }
+            } else if ((ways === 0) && absDistant >= (clientWidth / 5)) {
+                let newDate = new Date(self.year, self.month + 1, 1);
+                //计算新的render时间
+                self.year = newDate.getFullYear();
+                self.month = newDate.getMonth();
+                self.date = newDate.getDate();
+
+            }                
+            //取消绑定事件
+            removeEvent(calendarShow, 'touchend', process.touchEnd);
+            //重新render
+            calendarShow.parentNode.removeChild(calendarShow);
+            self.renderHead();
+            self.renderShow();
         }
-    };
+    }; 
+    addEvent(calendarShow, 'touchstart', process.touchStart);
 };
 
 (function main() {    
     var calendar = new Calendar();
-    console.log(calendar);
 })();

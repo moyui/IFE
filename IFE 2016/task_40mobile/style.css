@@ -63,6 +63,29 @@ body {
 .calendarHead {
     width: 10.8rem;
     height: 1.49rem;
+    color: #FFFFFF;
+}
+
+.headMYD {
+    position: relative;
+}
+
+.headMonth {
+    position: absolute;
+    line-height: 1.49rem;
+    left: 0.5rem;
+}
+
+.headYear {
+    left: 2.1rem;
+    position: absolute;
+    line-height: 1.15rem;
+}
+
+.headDate {
+    left: 2.1rem;
+    position: absolute;
+    line-height: 1.85rem;
 }
 
 .calendarTitle {
@@ -95,7 +118,18 @@ body {
     color: #999999;
 }
 
+.aboutme {
+    font-size: 16px;
+}
+
 @media screen and (max-width: 299px) {
+    .headMonth {
+        font-size: 18.72px;
+    }
+    .headYear,
+    .headDate {
+        font-size: 7.025px;
+    }
     .calendarTitle {
         font-size: 7.4px;
     }
@@ -105,6 +139,13 @@ body {
 }
 
 @media screen and (min-width: 300px) and (max-width: 339px) {
+    .headMonth {
+        font-size: 20.72px;
+    }
+    .headYear,
+    .headDate {
+        font-size: 7.025px;
+    }
     .calendarTitle {
         font-size: 7.4px;
     }
@@ -114,6 +155,13 @@ body {
 }
 
 @media screen and (min-width: 340px) and (max-width: 399px) {
+    .headMonth {
+        font-size: 22.72px;
+    }
+    .headYear,
+    .headDate {
+        font-size: 9.025px;
+    }
     .calendarTitle {
         font-size: 7.4px;
     }
@@ -123,6 +171,13 @@ body {
 }
 
 @media screen and (min-width: 400px) {
+    .headMonth {
+        font-size: 26.72px;
+    }
+    .headYear,
+    .headDate {
+        font-size: 11.025px;
+    }
     .calendarTitle {
         font-size: 9.4px;
     }
