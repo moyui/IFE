@@ -29,6 +29,10 @@ class Chess{
 		}
 		chessTable.appendChild(fragment);
 
+
+
+		
+
 		addEvent(button, 'click', inputProcess);
 	}
 
