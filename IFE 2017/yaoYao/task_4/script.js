@@ -2,8 +2,13 @@ class Chess{
 	constructor(option) {
 		this.x = option.x;
 		this.y = option.y;
-		this.towards = option.towards;
+		this.towards = option.towards || 'front';
+		this.ag = option.ag || 0;
+
 		this.chess;
+		this.chessTable;
+		//目标横行
+		this.tr
 
 		this.init();
 	}
@@ -29,11 +34,12 @@ class Chess{
 		}
 		chessTable.appendChild(fragment);
 
+		this.chessTable = chessTable;
+		this.tr = chessTable.querySelectorAll('tr');
+		document.documentElement.style.fontSize = document.body.clientWidth / 12.8 + 'px';
 
-
-		
-
-		addEvent(button, 'click', inputProcess);
+		addEvent(button, 'click', this.inputProcess.bind(this));
+		this.createChess();
 	}
 
 	inputProcess() {
@@ -41,55 +47,59 @@ class Chess{
 			inputText = []; 
 			inputText = input.split(" ");
 
+		if (inputText[1]) {
+			this.towards = inputText[1];
+		}
 		if (inputText[0] === "go") {
 			this.go();
 		} else if(inputText[0] === "turn") {
 			this.turn();
 		} 
-		if (inputText[1]) {
-			this.towards = inputText[1];
-		}
 	}
 
 	createChess() {
-			var chess = document.createElement("span");
-	switch(this.towards) {
-		case "front": break;
-		case "back" : chess.style.rotate = "rotate(90deg)"; break;
-		case "left" : chess.style.rotate = "rotate(180deg)"; break;
-		case "right": chess.style.rotate = "rotate(270deg)"; break;
-	}
-	var y = document.querySelectorAll("tr")[this.y],
-		x = y.querySelectorAll("td")[this.x];
-	x.appendChild(chess);
-	this.chess = chess;
+		let y = this.tr[this.y],
+			x = y.querySelectorAll("td")[this.x],
+			//判断是否已经创建过棋子
+			chess = (this.chess !== undefined) ? this.chess : document.createElement('span'); 
+
+		chess.className = 'chess';
+		x.appendChild(chess);
+		this.chess = chess;
 	}
 
-	go() {
-			switch(this.towards) {
-		case "front": this.y--; break;
-		case "back" : this.y++; break;
-		case "left" : this.x--; break;
-		case "right": this.x++; break;
-	}
-	var chess = document.querySelecor("span"),
-		parent = chess.parentNode;
-	parent.removeChild(chess);
-	this.create();
+	go() {	
+		let chess = this.chess,
+			parent = chess.parentNode;
+		switch(this.towards) {
+			case "front": if(this.y > 1 ) this.y--; break;
+			case "back" : if(this.y < 10 ) this.y++; break;
+			case "left" : if(this.x > 1) this.x--; break;
+			case "right": if(this.x < 10) this.x++; break;
+			default:break;
+		}
+		parent.removeChild(chess);
+		this.createChess();
 	}
 
 	turn() {
-			var chess = document.querySelecor("span"),
-		parent = chess.parentNode;
-	parent.removeChild(chess);
-	this.create();
+		let chess = this.chess,
+			parent = chess.parentNode;
+		switch(this.towards) {
+			case "front": break;
+			case "back" : chess.style.transform = "rotate(90deg)"; break;
+			case "left" : chess.style.transform  = "rotate(180deg)"; break;
+			case "right": chess.style.transform  = "rotate(270deg)"; break;
+			default:break;
+		}
+		parent.removeChild(chess);
+		this.createChess();
 	}
 }
 
 (function (){
 	let chess = new Chess({
 		x : 5,
-		y : 6,
-		towards : "front"
+		y : 5,
 	});
 })();
