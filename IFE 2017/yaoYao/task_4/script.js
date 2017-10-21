@@ -69,31 +69,19 @@ class Chess{
 	}
 
 	go() {	
-		let chess = this.chess,
-			parent = chess.parentNode;
-		switch(this.towards) {
-			case "front": if(this.y > 1 ) this.y--; break;
-			case "back" : if(this.y < 10 ) this.y++; break;
-			case "left" : if(this.x > 1) this.x--; break;
-			case "right": if(this.x < 10) this.x++; break;
-			default:break;
-		}
-		parent.removeChild(chess);
-		this.createChess();
+		let chess = this.chess;
+
 	}
 
 	turn() {
 		let chess = this.chess,
 			parent = chess.parentNode;
 		switch(this.towards) {
-			case "front": break;
-			case "back" : chess.style.transform = "rotate(90deg)"; break;
-			case "left" : chess.style.transform  = "rotate(180deg)"; break;
-			case "right": chess.style.transform  = "rotate(270deg)"; break;
+			case "LEF": ;break;
+			case "RIG" : ; break;
+			case "BAK" : ; break;
 			default:break;
 		}
-		parent.removeChild(chess);
-		this.createChess();
 	}
 }
 

@@ -6,8 +6,8 @@ html, body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, table, td, th
 }
 
 *,*:after,*:before {
-   -webkit-box-sizing: border-box;
-   box-sizing: border-box;
+   -webkit-box-sizing: content-box;
+   box-sizing: content-box;
 }
 
 body {
@@ -51,9 +51,9 @@ a {
 }
 /* css重置完成 */
 .wrap {
-    margin: 0 auto;
+    margin: 0 auto;    
+    margin-top: 10px;
     width: 5.0rem;
-    height: 100%
 }
 
 .chessTable {
@@ -92,6 +92,10 @@ a {
     font-size: 16px;
 }
 
+.input:focus {
+    border-color: #9FB6CD;
+}
+
 .button {
     margin-top: 0.1rem;
     width: 0.8rem;
@@ -105,9 +109,9 @@ a {
 .button:hover {
     background-color: #cccccc;
     color: #000000;
-    font-weight: bold;
 }
 
 .button:active {
+    font-weight: bold;
     background-color: #AAAAAA;
 }
