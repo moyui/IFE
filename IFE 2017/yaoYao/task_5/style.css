@@ -6,8 +6,8 @@ html, body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, table, td, th
 }
 
 *,*:after,*:before {
-   -webkit-box-sizing: content-box;
-   box-sizing: content-box;
+   -webkit-box-sizing: border-box;
+   box-sizing: border-box;
 }
 
 body {
@@ -51,9 +51,9 @@ a {
 }
 /* css重置完成 */
 .wrap {
-    margin: 0 auto;    
-    margin-top: 10px;
-    width: rem;
+    margin: 0 auto;
+    width: 5.0rem;
+    height: 100%
 }
 
 .chessTable {
