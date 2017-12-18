@@ -15,21 +15,24 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">登录</h4>
+          <h4 class="modal-title">登录</h4>
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label for="userNamel" class="control-label">用户名:</label>
-            <input type="text" id="userNamel" class="form-control">
+            <label for="userNameL" class="control-label">用户名:</label>
+            <input type="text" id="userNameL" class="form-control">
           </div>
           <div class="form-group">
-            <label for="userPassl" class="control-label">密码:</label>
-            <input type="password" id="userPassl" class="form-control">
+            <label for="userPassL" class="control-label">密码:</label>
+            <input type="password" id="userPassL" class="form-control">
+          </div>
+          <div class="form-group">
+            <p id="warningL"></p>
           </div>
         </div>
         <div class="modal-footer">
           <a href="#" id="registIn">注册入口</a>
-          <button type="submit" class="btn btn-primary btn-block">确定</button>
+          <button type="submit" class="btn btn-primary btn-block" id="loginSub">确定</button>
           <button type="button" class="btn btn-default btn-block" data-dismiss="modal">取消</button>
         </div>
       </div>
@@ -42,12 +45,12 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">注册</h4>
+        <h4 class="modal-title">注册</h4>
       </div>
       <div class="modal-body">
           <div class="form-group">
-            <label for="userNamel" class="control-label">用户名:</label>
-            <input type="text" id="userNamel" class="form-control">
+            <label for="userNameR" class="control-label">用户名:</label>
+            <input type="text" id="userNameR" class="form-control">
           </div>
           <div class="form-group">
             <label for="userPassR" class="control-label">密码:</label>
@@ -57,9 +60,12 @@
             <label for="enUserPassR" class="control-label">确认密码:</label>
             <input type="password" id="enUserPassR" class="form-control">
           </div>
+          <div class="form-group">
+            <p id="warningR"></p>
+          </div>
       </div>
       <div class="modal-footer">
-          <button type="submit" class="btn btn-primary btn-block">确定</button>
+          <button type="submit" class="btn btn-primary btn-block" id="registSub">确定</button>
           <button type="button" class="btn btn-default btn-block" data-dismiss="modal">取消</button>
       </div>
     </div>
@@ -81,7 +87,7 @@
   <div class="container-fluid" id="main">
     <div class="row">
       <div id="lf-bd" class="col-lg-2">
-        <h3>品类</h3>
+        <h4>品类</h4>
         <ul class="nav nav-pills nav-stacked">
         </ul>
       </div>    
@@ -100,8 +106,8 @@
   
   <script src="./jquery/dist/jquery.min.js"></script>
   <script src="./bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="./scripts/util.js"></script>
   <script src="./scripts/control.js"></script>
+  <script src="./scripts/util.js"></script>
   <script src="./scripts/script.js"></script>
 </body>
 </html>
