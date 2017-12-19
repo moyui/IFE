@@ -1,29 +1,25 @@
 <%@ page contentType="text/html;charset=GBK" language="java" %>
 <%@ page import="java.util.*" errorPage="" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="java.io.*" %>
 
-<% request.setCharacterEncoding("GBK");
-   String user=request.getParameter("user");
-   String pw=request.getParameter("pw");
+<% 
+   request.setCharacterEncoding("GBK"); 
+   String user=request.getParameter("name");
+   String pw=request.getParameter("password");
    try{
      Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
-
-     //String spath="login.accdb";
-     //String dbpath=application.getRealPath(spath);
      String dbuser="";
      String dbpw="";
-     //String url="jdbc:odbc:Driver={Microsoft Access Driver (*.mdb,*.accdb)};DBQ="+dbpath;
      String url="jdbc:odbc:ec";
      Connection conn=DriverManager.getConnection(url,dbuser,dbpw);
      Statement stmt=conn.createStatement();
-     String sql="select * from users where uname='"+user+"' and upw='"+pw+"'";
+     String sql="select * from users where uname='"+user+"' and upassword='"+pw+"'";
      ResultSet rs=stmt.executeQuery(sql);
      if(rs.next()){
-       //out.print("Welcome "+rs.getString("uname"));
-       response.sendRedirect("cart.jsp");
+      response.getWriter().print("Welcome " + user);
      }else {
-       //out.println("Please Regist, first");
-       response.sendRedirect("login.html");
+      response.getWriter().print("Login failed, Please enter password again or Regist first");
      }
      rs.close();
      stmt.close();
