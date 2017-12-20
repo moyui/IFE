@@ -2,7 +2,9 @@ function Ajax(send, process, ...rest) {
   let xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() {
     if(xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-      process(xmlHttp);
+      if (process) {
+        process(xmlHttp);
+      }
     }   
   }    
   xmlHttp.open('post', 'http://localhost:8080/jsps/'+ send +'.jsp', true);
@@ -12,6 +14,7 @@ function Ajax(send, process, ...rest) {
     case 'regist':
     case 'login': xmlHttp.send('name=' + rest[0] + '&password=' + rest[1]); break;
     case 'showitems' : xmlHttp.send('variety=' + rest[0]); break;
+    case 'cart': xmlHttp.send('goods=' + rest[0] + '&actions='+ rest[1]); break;
     default: break;
   }
 }
@@ -76,35 +79,82 @@ function ShowItems(event, element) {
         preTextArr = preText.split('|'),
         itemsFrag = document.createDocumentFragment(),
         items = document.getElementById('items');
+
+    items.innerHTML = '';  //清空容器
     preTextArr.forEach(function(elementArr, index) {
       if(index === preTextArr.length - 1) {  //去除末端空格
         return false;
       }
       let itemArr = elementArr.split('&');
-      let li = document.createElement('li'),
+      let divpanel = document.createElement('div'),
+          divpanelbody = document.createElement('div'),
+          divpanelheading = document.createElement('div'),
+          divbgroup = document.createElement('div'),
+          divbplus = document.createElement('button'),
+          divbminus = document.createElement('button'),
+          diviwrap = document.createElement('div'),
+          inputnum = document.createElement('input'),
           name = document.createElement('h5'),
           img = document.createElement('img'),
           price = document.createElement('h3'),
           buy = document.createElement('button');
 
+      divpanel.className = 'panel panel-default';
+      divpanelbody.className = 'panel-body';
+      divpanelheading.className = 'panel-heading';
+      divbgroup.className = 'btn-group';
+      diviwrap.className = 'col-lg-2';
+      inputnum.className = 'form-control';
+      img.className = 'img-thumbnail pull-left';
+      price.className = 'pull-left';
+
+      divbplus.innerHTML = '+';
+      divbminus.innerHTML = '-';
+      inputnum.setAttribute('value', '1');
       name.innerHTML = itemArr[0];
-      price.innerHTML = itemArr[1];
+      price.innerHTML = '¥' + itemArr[1];
       buy.innerHTML = "添加至购物车";
 
-      li.appendChild(name);
-      li.appendChild(img);
-      li.appendChild(price);
-      li.appendChild(buy);
-      itemsFrag.appendChild(li);
+      addEvent(buy, 'click', function(event) {
+        AddBuyList(event, itemArr[0]);  //只传入商品名
+      })
+
+
+      diviwrap.appendChild(inputnum);
+
+      divbgroup.appendChild(divbplus);
+      divbgroup.appendChild(diviwrap);
+      divbgroup.appendChild(divbminus);
+
+      divpanelheading.appendChild(name);
+      
+      divpanelbody.appendChild(img);
+      divpanelbody.appendChild(price);
+      divpanelbody.appendChild(divbgroup);
+      divpanelbody.appendChild(buy);
+
+      divpanel.appendChild(divpanelheading);
+      divpanel.appendChild(divpanelbody);
+
+      itemsFrag.appendChild(divpanel);
     })  
     items.appendChild(itemsFrag);
   }, element);
   event.stopPropagation();
 }
 
+function AddBuyList(event, itemName) {
+    event.preventDefault();
+    Ajax('cart', function() {
+      document.getElementById('buylistframe').contentWindow.location.reload(true);
+    }, itemName, 'AddCart');
+    event.stopPropagation();
+}
+
 window.onload = function() {
   let loginSub = document.getElementById('loginSub'),
-      registSub = document.getElementById('registSub');
+      registSub = document.getElementById('registSub'),
+      deleteBuyList = document.getElementById('deleteBuyList');
 
   addEvent(loginSub, 'click', function(event) {
     LoginSub(event);
@@ -113,6 +163,14 @@ window.onload = function() {
   addEvent(registSub, 'click', function(event) {
     RegistSub(event);
   });
+
+  addEvent(deleteBuyList, 'click', function(event) {
+    event.preventDefault();
+    Ajax('cart', function() {
+      document.getElementById('buylistframe').contentWindow.location.reload(true);
+    }, null, 'Delete');
+    event.stopPropagation();
+  })
 
   ShowVarietires();
 }
