@@ -4,7 +4,7 @@
 <%@ page import="java.io.*" %>
 
 <% 
-   request.setCharacterEncoding("GBK"); 
+   request.setCharacterEncoding("UTF-8"); 
    String user=request.getParameter("name");
    String pw=request.getParameter("password");
    try{

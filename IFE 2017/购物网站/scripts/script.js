@@ -23,7 +23,7 @@ function ShowVarietires() {
   let varietiesShow = document.getElementById('varieties'),
       varShowfrag = document.createDocumentFragment();
   Ajax('showvarieties', function(xmlHttp) {
-      let preText = xmlHttp.responseText.replace(/[\n]/ig,'');
+      let preText = xmlHttp.responseText.replace(/[\n]/ig,'');//去除回车
       let varArray = preText.split('|');
       varArray.forEach(function(element, index) {
         if(index === varArray.length - 1) {  //去除末端空格
@@ -52,8 +52,19 @@ function LoginSub(event) {
       loginCancel = document.getElementById('loginCancel'),
       loginButton = document.getElementById('login'),
       registButton = document.getElementById('regist'),
-      navbarp = document.getElementById('navbarp');
+      navbarp = document.getElementById('navbarp'),
+      loginout = document.getElementById('exit');
   warning.innerHTML = '';
+
+  if(!name) {
+    warning.innerHTML = '用户名不能为空';
+    return false;
+  }
+  if(!password) {
+    warning.innerHTML = '密码不能为空';
+    return false;
+  }
+
   Ajax('login', function(xmlHttp) {
     warning.innerHTML = xmlHttp.responseText;
     let judge = xmlHttp.responseText.split(' ');
@@ -68,6 +79,7 @@ function LoginSub(event) {
       loginButton.style.display = "none"; 
       registButton.style.display = "none";
       navbarp.innerHTML = xmlHttp.responseText;
+      loginout.style.display = "inline-block";
     } 
     name = '';
     password = '';
@@ -80,14 +92,39 @@ function RegistSub(event) {
   let name = document.getElementById('userNameR').value,
     password = document.getElementById('userPassR').value,
     enPassword = document.getElementById('enUserPassR').value,
-    warning = document.getElementById('warningR'); 
-  warning.innerHTML = '';
-  if(password !== enPassword) {
-    warning.innerHTML = "两次输入的密码不一致，请重新输入！";//
+    warning = document.getElementById('warningR'),
+    registSub = document.getElementById('registSub'),
+    registCancel = document.getElementById('registCancel');
+    warning.innerHTML = '';
+
+  if(!name) {
+    warning.innerHTML = '用户名不能为空';
     return false;
   }
+  if(!password) {
+    warning.innerHTML = '密码不能为空';
+    return false;
+  }
+  if(!enPassword) {
+    warning.innerHTML = '确认密码不能为空';
+    return false;
+  }  
+  if(password !== enPassword) {
+    warning.innerHTML = "两次输入的密码不一致，请重新输入";
+    return false;
+  }
+
   Ajax('regist', function(xmlHttp) {
-    warning.innerHTML = xmlHttp.responseText;
+    let judge = xmlHttp.responseText.replace(/[\n]/ig,'').split(' ');
+    warning.innerHTML = judge[0];
+    if(judge[2] == 1) {  //空格没有删除干净
+      registSub.disabled = "disabled";
+      registCancel.disabled = "disabled";
+      setTimeout(function(){
+        $('#registModal').modal('hide');
+        $('#loginModal').modal('show');
+      }, 2000);
+    }
   }, name, password);
   event.stopPropagation();
 }

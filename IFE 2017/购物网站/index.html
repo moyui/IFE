@@ -46,9 +46,7 @@
             <label for="userPassL" class="control-label white">密码:</label>
             <input type="password" id="userPassL" class="form-control">
           </div>
-          <div class="form-group">
-            <p id="warningL"></p>
-          </div>
+          <h4 id="warningL" class="text-center white"></h4>
         </div>
         <div class="modal-footer">
           <a href="#" id="registIn" class="white">注册入口</a>
@@ -80,13 +78,11 @@
             <label for="enUserPassR" class="control-label white">确认密码:</label>
             <input type="password" id="enUserPassR" class="form-control">
           </div>
-          <div class="form-group">
-            <p id="warningR"></p>
-          </div>
+          <h4 id="warningR" class="text-center white"></h4>
       </div>
       <div class="modal-footer">
           <button type="submit" class="btn btn-primary btn-block" id="registSub">确定</button>
-          <button type="button" class="btn btn-default btn-block" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-default btn-block" data-dismiss="modal" id="registCancel">取消</button>
       </div>
     </div>
   </div>
@@ -102,6 +98,7 @@
         <button type="button" class="btn btn-default navbar-btn" id="login" data-toggle="modal" data-target="#loginModal"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;登录</button>
         <button type="button" class="btn btn-default navbar-btn" id="regist" data-toggle="modal" data-target="#registModal"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span>&nbsp;注册</button>
         <p class="navbar-text" id="navbarp"></p>
+        <button type="button" class="btn btn-default navbar-btn" id="exit" data-toggle="modal" data-target="#registModal" style="display:none;" onclick="window.open('../index.html','_self')"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;退出登录</button>
       </div>
     </div>
   </nav>
