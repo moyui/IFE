@@ -3,7 +3,30 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.io.*" %>
 
+<html>
+<head>
+  <title>购物车</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body{
+      background-image:url(../img/background.jpg);
+      background-repeat: no-repeat;
+      background-size: cover
+    } 
+    .white{
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
 <%
+  String username=(String)session.getAttribute("username");
+  if(username == null){//防止恶意登录
+    out.print("请先登录");
+    return;
+  }
   Vector<String> buylist;
   request.setCharacterEncoding("GBK");  
   String goods=request.getParameter("goods");
@@ -36,7 +59,8 @@
   if(action!=null && action.equals("AddCart")){
     buylist=(Vector<String>)session.getAttribute("shopping");
     if(buylist==null){  buylist=new Vector<String>(); }
-    buylist.addElement(goods);
+    buylist.addElement(goods);    
+    buylist.addElement(quantity);
     buylist.addElement(price);
     session.setAttribute("shopping",buylist);
   }
@@ -52,22 +76,40 @@
   }
 %>
 
-  <p>当前购物车的商品为:</p>
-  <table>
+  <h4 class="text-center white">当前购物车的商品为:</h4>
+  <table class="table table-hover" >
     <tr>
-      <th>商品名</th><th>商品数量</th><th>单价</th>
+      <th>商品名</th><th>商品数量</th><th>单价</th><th>总价</th>
     </tr>
 
 <%
   //Vector buylist;
+  double sum=0;
+  double quantityn=0;
+  double pricen=0;
   buylist=(Vector<String>)session.getAttribute("shopping");
   if(buylist!=null && buylist.size()>0){
-    for(int i=0;i<buylist.size();i=i+2){
+    for(int i=0;i<buylist.size();i=i+3){
+      quantityn=Double.parseDouble(buylist.elementAt(i+1));
+      pricen=Double.parseDouble(buylist.elementAt(i+2));
+      pricen=pricen*quantityn;
+      sum+=pricen;
       out.print("<tr>");
-      out.print("<td>"+buylist.elementAt(i)+"</td>" + "<td>"+buylist.elementAt(i+1)+"</td>");
+      out.print("<td>"+buylist.elementAt(i)+"</td>"+"<td>"+buylist.elementAt(i+1)+"</td>"+"<td>"+buylist.elementAt(i+2)+"<td>"+pricen+"</td>");
       out.print("</tr>");
     }
-  out.print("</table>");
   }
 %>
 
+
+
+</table>
+
+<%
+  out.println("<h4 class='white text-center'>商品总价为¥"+sum+"</h5>");
+%>
+
+</body>
+<script src="../jquery/dist/jquery.min.js"></script>
+<script src="../bootstrap/dist/js/bootstrap.min.js"></script>
+</html>

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=GBK" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.*" errorPage="" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.io.*" %>

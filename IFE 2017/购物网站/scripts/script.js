@@ -14,7 +14,7 @@ function Ajax(send, process, ...rest) {
     case 'regist':
     case 'login': xmlHttp.send('name=' + rest[0] + '&password=' + rest[1]); break;
     case 'showitems' : xmlHttp.send('variety=' + rest[0]); break;
-    case 'cart': xmlHttp.send('goods=' + rest[0] + '&actions='+ rest[1]); break;
+    case 'cart': xmlHttp.send('goods=' + rest[0] + '&quantity='+ rest[1] + '&actions='+ rest[2]); break;
     default: break;
   }
 }
@@ -47,11 +47,31 @@ function LoginSub(event) {
   event.preventDefault();
   let name = document.getElementById('userNameL').value,
       password = document.getElementById('userPassL').value;
-      warning = document.getElementById('warningL'); 
+      warning = document.getElementById('warningL'),
+      loginSub = document.getElementById('loginSub'),
+      loginCancel = document.getElementById('loginCancel'),
+      loginButton = document.getElementById('login'),
+      registButton = document.getElementById('regist'),
+      navbarp = document.getElementById('navbarp');
   warning.innerHTML = '';
   Ajax('login', function(xmlHttp) {
+    warning.innerHTML = xmlHttp.responseText;
+    let judge = xmlHttp.responseText.split(' ');
+    if(judge[0] === '欢迎') {
+      let buylistframe = document.getElementById('buylistframe');
+      buylistframe.src = 'http://localhost:8080/jsps/cart.jsp';
+      loginSub.disabled = "disabled";
+      loginCancel.disabled = "disabled";
+      setTimeout(function(){
+        $('#loginModal').modal('hide');
+      }, 2000);
+      loginButton.style.display = "none"; 
+      registButton.style.display = "none";
+      navbarp.innerHTML = xmlHttp.responseText;
+    } 
+    name = '';
+    password = '';
   }, name, password);
-  items.appendChild(itemsFrag);
   event.stopPropagation();
 }
 
@@ -74,6 +94,7 @@ function RegistSub(event) {
 
 function ShowItems(event, element) {
   event.preventDefault();
+  let buylistframe = document.getElementById('buylistframe');
   Ajax('showitems', function(xmlHttp) {
     let preText = xmlHttp.responseText.replace(/[\n]/ig,''),
         preTextArr = preText.split('|'),
@@ -92,7 +113,6 @@ function ShowItems(event, element) {
           divbgroup = document.createElement('div'),
           divbplus = document.createElement('button'),
           divbminus = document.createElement('button'),
-          diviwrap = document.createElement('div'),
           inputnum = document.createElement('input'),
           name = document.createElement('h5'),
           img = document.createElement('img'),
@@ -102,36 +122,52 @@ function ShowItems(event, element) {
       divpanel.className = 'panel panel-default';
       divpanelbody.className = 'panel-body';
       divpanelheading.className = 'panel-heading';
-      divbgroup.className = 'btn-group';
-      diviwrap.className = 'col-lg-2';
-      inputnum.className = 'form-control';
-      img.className = 'img-thumbnail pull-left';
-      price.className = 'pull-left';
 
+      divbgroup.className = 'btn-group pull-right';
+      inputnum.className = 'col-lg-2 pull-right';
+      divbplus.className = 'pull-right';
+      inputnum.setAttribute('value', '1');
+      divbminus.className = 'pull-right';
+      buy.className = 'pull-right';
       divbplus.innerHTML = '+';
       divbminus.innerHTML = '-';
-      inputnum.setAttribute('value', '1');
+
+      img.className = 'img-thumbnail pull-left itemimg';
+      price.className = 'pull-right pricebottom';
+
       name.innerHTML = itemArr[0];
-      price.innerHTML = '¥' + itemArr[1];
+      price.innerHTML = '价格:&nbsp¥' + itemArr[1];
+      img.src = 'http://localhost:8080/img/' + itemArr[2];
       buy.innerHTML = "添加至购物车";
 
       addEvent(buy, 'click', function(event) {
-        AddBuyList(event, itemArr[0]);  //只传入商品名
+        if (buylistframe.src === 'http://localhost:8080/') {   //判断是否已登录
+          $('#loginModal').modal('show');   //未登录就请登录
+        } else {
+          AddBuyList(event, itemArr[0], inputnum.value);  //只传入商品名,商品数量
+        }
       })
 
+      addEvent(divbplus, 'click', function(event) {
+        inputnum.value++;
+      })
 
-      diviwrap.appendChild(inputnum);
+      addEvent(divbminus, 'click', function(event) {
+        if(inputnum.value >= 1) {
+          inputnum.value--;
+        }
+      })
 
-      divbgroup.appendChild(divbplus);
-      divbgroup.appendChild(diviwrap);
+      divbgroup.appendChild(buy);
       divbgroup.appendChild(divbminus);
+      divbgroup.appendChild(inputnum);
+      divbgroup.appendChild(divbplus);
 
       divpanelheading.appendChild(name);
       
       divpanelbody.appendChild(img);
       divpanelbody.appendChild(price);
       divpanelbody.appendChild(divbgroup);
-      divpanelbody.appendChild(buy);
 
       divpanel.appendChild(divpanelheading);
       divpanel.appendChild(divpanelbody);
@@ -143,18 +179,24 @@ function ShowItems(event, element) {
   event.stopPropagation();
 }
 
-function AddBuyList(event, itemName) {
+function AddBuyList(event, itemName, quantity) {
     event.preventDefault();
     Ajax('cart', function() {
       document.getElementById('buylistframe').contentWindow.location.reload(true);
-    }, itemName, 'AddCart');
+    }, itemName, quantity, 'AddCart');
     event.stopPropagation();
+}
+
+function Pay() {
+  window.location.href = 'http://localhost:8080/jsps/pay.jsp';
+  document.getElementById('buylistframe').contentWindow.location.reload(true);
 }
 
 window.onload = function() {
   let loginSub = document.getElementById('loginSub'),
       registSub = document.getElementById('registSub'),
-      deleteBuyList = document.getElementById('deleteBuyList');
+      deleteBuyList = document.getElementById('deleteBuyList'),
+      payButton = document.getElementById('pay');
 
   addEvent(loginSub, 'click', function(event) {
     LoginSub(event);
@@ -165,10 +207,16 @@ window.onload = function() {
   });
 
   addEvent(deleteBuyList, 'click', function(event) {
-    event.preventDefault();
+    event.stopPropagation();
     Ajax('cart', function() {
       document.getElementById('buylistframe').contentWindow.location.reload(true);
-    }, null, 'Delete');
+    }, null, null, 'Delete');
+    event.stopPropagation();
+  })
+
+  addEvent(payButton, 'click', function(event) {
+    event.stopPropagation();
+    Pay();
     event.stopPropagation();
   })
 
