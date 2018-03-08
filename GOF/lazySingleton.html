@@ -12,6 +12,15 @@
       return div;
     };
 
+    var getSingle = (function(fn) {
+      var result;
+      return function() {
+        return result || (result = fn.apply(this, arguments));
+      }
+    })();
+
+    var createSingleLoginLayer = getSingle(createLoginLayer);
+
     document.getElementById('loginBtn').onclick = function() {
       var loginLayer = createLoginLayer();
       loginLayer.style.display = 'block';

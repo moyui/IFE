@@ -19,4 +19,4 @@ CreateDiv.prototype.init = function() {
   document.body.appendChild(div);
 };
 
-var a = new ProxySingletonCreateDiv('sven1');
+var a = new ProxySingletonCreateDiv('sven1'); 
