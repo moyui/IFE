@@ -12,17 +12,18 @@
       return div;
     };
 
-    var getSingle = (function(fn) {
+    var getSingle = function(fn) {
       var result;
       return function() {
+        console.log(this);
         return result || (result = fn.apply(this, arguments));
       }
-    })();
+    };
 
     var createSingleLoginLayer = getSingle(createLoginLayer);
 
     document.getElementById('loginBtn').onclick = function() {
-      var loginLayer = createLoginLayer();
+      var loginLayer = createSingleLoginLayer();
       loginLayer.style.display = 'block';
     };
   </script>
