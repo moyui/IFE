@@ -1,0 +1,27 @@
+<html>
+  <body>
+    <form id="registerForm" method="post">
+      请输入用户名:<input type="text" name="username"/>
+      请输入密码:<input type="text" name="password" />
+      请输入手机号码: <input type="text" name="phoneNumber" />
+      <button>提交</button>
+  </body> 
+
+  <script>
+    var strategies = {
+      isNonEmpty: function(value, errorMsg) {
+        if (value === '') {
+          return errorMsg;
+        }
+      },
+      minLength: function(value, length, errorMsg) {
+        if (value.length < length) {
+          return errorMsg;
+        }
+      },
+      isMobile: function(value, errorMsg) {
+        return errorMsg;
+      }
+    }
+  </script>
+</html>
